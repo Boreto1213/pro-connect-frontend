@@ -1,0 +1,31 @@
+.logo {
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes logo-shine {
+  0% {
+    filter: drop-shadow(0 0 1em rgb(20 184 166));
+  }
+  50% {
+    filter: drop-shadow(0 0 2em rgb(20 184 166));
+  }
+  100% {
+    filter: drop-shadow(0 0 1em rgb(20 184 166));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo {
+    animation: logo-spin infinite 120s linear, logo-shine infinite 3s;
+  }
+}
