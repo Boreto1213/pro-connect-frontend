@@ -6,7 +6,7 @@ interface AuthLayoutProps {}
 
 const AuthLayout: FC<AuthLayoutProps> = ({}) => {
   return (
-    <div className='flex justify-end items-center w-full h-screen bg-slate-700 overflow-hidden relative px-16 gap-[400px]'>
+    <div className='flex 2xl:justify-end justify-evenly items-center w-full h-screen bg-slate-700 overflow-hidden relative px-16 2xl:gap-[400px]'>
       <div className='absolute top-6 left-6 z-10 flex justify-center items-center gap-2'>
         <svg
           height='60px'
@@ -55,7 +55,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({}) => {
 
       <img
         src={globalNetwork}
-        className='h-[500px] w-[500px] z-10 logo'
+        className='h-[500px] w-[500px] z-10 logo hidden lg:block'
         alt='global network'
       />
 

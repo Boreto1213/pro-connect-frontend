@@ -180,7 +180,7 @@ const RegisterForm: FC = () => {
             </p>
           )}
         </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between flex-col sm:flex-row'>
           <Button>Register</Button>
           <Link to='/auth/login'>
             <Button variant='ghost'>Alredy have an account?</Button>
