@@ -9,6 +9,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-teal-500 text-white hover:bg-teal-600',
+        slate: 'bg-slate-700 text-white hover:bg-slate-800',
         ghost: 'bg-transparent text-teal-700 hover:bg-slate-200',
       },
       size: {

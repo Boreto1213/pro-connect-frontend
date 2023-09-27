@@ -1,8 +1,10 @@
 import { FC } from 'react'
+import { Outlet } from 'react-router-dom'
 import globalNetwork from '../assets/global-network.png'
-import Button from '../components/Button'
 
-const Login: FC = () => {
+interface AuthLayoutProps {}
+
+const AuthLayout: FC<AuthLayoutProps> = ({}) => {
   return (
     <div className='flex justify-end items-center w-full h-screen bg-slate-700 overflow-hidden relative px-16 gap-[400px]'>
       <div className='absolute top-6 left-6 z-10 flex justify-center items-center gap-2'>
@@ -17,11 +19,11 @@ const Login: FC = () => {
           xmlSpace='preserve'
           fill='#000000'
         >
-          <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
+          <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
           <g
             id='SVGRepo_tracerCarrier'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           ></g>
           <g id='SVGRepo_iconCarrier'>
             {' '}
@@ -51,54 +53,15 @@ const Login: FC = () => {
       </div>
       <div className='flex justify-center items-center absolute left-[-500px] top-[-500px] h-[1600px] w-[1600px] bg-white rounded-full' />
 
-
       <img
         src={globalNetwork}
         className='h-[500px] w-[500px] z-10 logo'
         alt='global network'
       />
 
-
-      <div className='w-full max-w-md'>
-        <form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 z-10'>
-          <h4 className='w-full flex justify-center text-xl font-semibold my-3'>
-            Sign in to your account:
-          </h4>
-          <div className='mb-4'>
-            <label
-              htmlFor='email'
-              className='block text-gray-700 text-sm font-bold mb-2'
-            >
-              Email:
-            </label>
-            <input
-              type='text'
-              name='email'
-              placeholder='Email'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            />
-          </div>
-          <div className='mb-4'>
-            <label
-              htmlFor='password'
-              className='block text-gray-700 text-sm font-bold mb-2'
-            >
-              Password:
-            </label>
-            <input
-              type='password'
-              name='password'
-              placeholder='*************'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            />
-          </div>
-
-          <Button type='submit'>Sign in</Button>
-          <Button variant='ghost' className='ml-2'>Don't have un account?</Button>
-        </form>
-      </div>
+      <Outlet />
     </div>
   )
 }
 
-export default Login
+export default AuthLayout
