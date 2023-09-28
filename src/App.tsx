@@ -3,6 +3,7 @@ import './App.css'
 import AuthLayout from './pages/AuthLayout'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
+import Providers from './components/Providers'
 
 const router = createBrowserRouter([
   { path: '/', element: <Navigate to='/auth/login' /> },
@@ -14,11 +15,14 @@ const router = createBrowserRouter([
       { path: 'register', element: <RegisterForm /> },
     ],
   },
-
 ])
 
 function App() {
-  return <RouterProvider router={router} />
+  return (
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
+  )
 }
 
 export default App

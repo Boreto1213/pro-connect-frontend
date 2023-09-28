@@ -51,7 +51,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({}) => {
           Pro<span className='text-slate-500'>Connect</span>
         </h1>
       </div>
-      <div className='flex justify-center items-center absolute left-[-500px] top-[-500px] h-[1600px] w-[1600px] bg-white rounded-full' />
+      <div className='flex justify-center items-center absolute left-[-500px] top-[-500px] h-[1600px] w-[1600px] bg-white rounded-full shadow-md' />
 
       <img
         src={globalNetwork}

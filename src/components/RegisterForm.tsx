@@ -1,11 +1,17 @@
 import { FC } from 'react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import Button from '../components/Button'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
+import { RadioGroup, Radio } from '@nextui-org/radio'
 
 const schema = z.object({
+  isExpert: z
+    .string()
+    .nonempty()
+    .refine((value) => value === 'expert' || value === 'client'),
   firstName: z.string().nonempty().max(50),
   lastName: z.string().nonempty().max(50),
   email: z.string().email().max(150),
@@ -23,12 +29,39 @@ type FormData = z.infer<typeof schema>
 
 const RegisterForm: FC = () => {
   const {
+    control,
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const onSubmit = (data: FieldValues) => console.log(data)
+  const onSubmit = (data: FormData) => {
+    const formattedData = { ...data, isExpert: data.isExpert === 'expert' }
+    console.log(formattedData)
+    console.log(JSON.stringify(formattedData))
+
+    fetch('http://localhost:8080/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formattedData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          if (!response.ok) {
+            throw new Error('Network response was not ok')
+          }
+          return response.json()
+        }
+      })
+      .then((data) => {
+        toast.success('Registration sucessful.')
+      })
+      .catch((error) => {
+        toast.error('Something went wrong. Please try again.')
+      })
+  }
 
   return (
     <div className='w-full max-w-md z-10'>
@@ -37,8 +70,48 @@ const RegisterForm: FC = () => {
         className='bg-white shadow-md px-8 pt-6 pb-8 rounded'
       >
         <h4 className='w-full flex justify-center text-xl font-semibold my-3'>
-          Register:
+          Register your account:
         </h4>
+        <div className='mb-4'>
+          <Controller
+            name='isExpert'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <RadioGroup
+                size='sm'
+                color='default'
+                label={
+                  <p className='text-gray-700 text-sm font-bold'>
+                    Select account type:
+                  </p>
+                }
+                orientation='horizontal'
+              >
+                <Radio
+                  {...field}
+                  value='client'
+                  onChange={(e) => field.onChange(e.target.value)}
+                >
+                  Client
+                </Radio>
+                <Radio
+                  {...field}
+                  value='expert'
+                  onChange={(e) => field.onChange(e.target.value)}
+                >
+                  Expert
+                </Radio>
+              </RadioGroup>
+            )}
+          />
+          {errors.isExpert && (
+            <p className='w-full text-sm text-red-600 font-medium mt-2'>
+              Please select on of the fields.
+            </p>
+          )}
+        </div>
+
         <div className='mb-4'>
           <label
             htmlFor='firstName'
@@ -181,7 +254,7 @@ const RegisterForm: FC = () => {
           )}
         </div>
         <div className='flex justify-between flex-col sm:flex-row'>
-          <Button>Register</Button>
+          <Button type='submit'>Register</Button>
           <Link to='/auth/login'>
             <Button variant='ghost'>Alredy have an account?</Button>
           </Link>
