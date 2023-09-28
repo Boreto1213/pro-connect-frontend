@@ -4,9 +4,10 @@ import AuthLayout from './pages/AuthLayout'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import Providers from './components/Providers'
+import DashboardLayout from './pages/DashboardLayout'
 
 const router = createBrowserRouter([
-  { path: '/', element: <Navigate to='/auth/login' /> },
+  { path: '/', element: <Navigate to='/dashboard' /> },
   {
     path: '/auth',
     element: <AuthLayout />,
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: 'register', element: <RegisterForm /> },
     ],
   },
+  { path: '/dashboard', element: <DashboardLayout /> }
 ])
 
 function App() {

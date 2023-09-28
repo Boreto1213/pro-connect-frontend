@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import Button from './Button'
-import { Link } from 'react-router-dom'
+import Button from './ui/Button'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,14 +17,18 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 const LoginForm: FC = ({}) => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const onSubmit = (data: FieldValues) => console.log(data)
-  
+  const onSubmit = (data: FieldValues) => {
+    console.log(data)
+    navigate('/dashboard')
+  }
+
   return (
     <div className='w-full max-w-md z-10'>
       <form
@@ -80,7 +84,7 @@ const LoginForm: FC = ({}) => {
           <Button type='submit'>Sign in</Button>
           <Link to='/auth/register'>
             <Button variant='ghost' className='ml-2'>
-              Don't have un account?
+              Don't have an account?
             </Button>
           </Link>
         </div>
