@@ -40,7 +40,7 @@ const TopBar: FC<TopBarProps> = ({}) => {
           className='w-11 h-11'
         />
         <h4 className='text-md font-semibold text-slate-800 whitespace-nowrap'>
-          Donald Trump
+          Donald Pump
         </h4>
       </div>
     </div>
