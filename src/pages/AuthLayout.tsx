@@ -3,9 +3,9 @@ import { Outlet } from 'react-router-dom'
 import globalNetwork from '../assets/global-network.png'
 import { Icons } from '../components/Icons'
 
-interface AuthLayoutProps {}
 
-const AuthLayout: FC<AuthLayoutProps> = ({}) => {
+
+const AuthLayout: FC = () => {
   return (
     <div className='flex 2xl:justify-end justify-evenly items-center w-full h-screen bg-slate-700 overflow-hidden relative px-16 2xl:gap-[400px]'>
       <div className='absolute top-5 left-8 z-10 flex justify-center items-center gap-2'>

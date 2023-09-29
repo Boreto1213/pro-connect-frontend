@@ -7,6 +7,11 @@ import {
   PackagePlus,
   BarChart4,
   HelpCircle,
+  Sun,
+  Moon,
+  SunMoon,
+  Bell,
+  Search
 } from 'lucide-react'
 
 export const Icons = {
@@ -59,6 +64,11 @@ export const Icons = {
   PackagePlus, // Create new service (only for expers)
   BarChart4, // Statistics
   HelpCircle, // About
+  Sun,
+  Moon,
+  SunMoon,
+  Bell,
+  Search
 }
 
 export type Icon = keyof typeof Icons

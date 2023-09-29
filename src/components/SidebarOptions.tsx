@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { SideBarOption } from '../types/sidebar-options'
+import { SideBarOption } from '../types/sidebar-option'
 import { Icons } from './Icons'
 import { Link } from 'react-router-dom'
 
@@ -14,7 +14,11 @@ const SidebarOptions: FC<SidebarOptionsProps> = ({ sidebarOptions }) => {
         sidebarOptions.map((option) => {
           const Icon = Icons[option.icon]
           return (
-            <Link className='w-full cursor-pointer' key={option.id} to={option.href}>
+            <Link
+              className='w-full cursor-pointer'
+              key={option.id}
+              to={option.href}
+            >
               <div className='flex justify-start items-center w-full h-14 gap-2 px-4 py-2 hover:bg-gray-50 transition-all duration-500 rounded-md group/sidebar-option'>
                 <div className='flex justify-start items-center p-1 rounded-md'>
                   <Icon className='w-8 h-8 text-gray-700 transition-all duration-500 group-hover/sidebar-option:text-teal-500' />
