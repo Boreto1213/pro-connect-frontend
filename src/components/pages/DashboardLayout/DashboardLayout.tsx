@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom'
 
 const DashboardLayout: FC = () => {
   const sidebarOptions: SideBarOption[] = [
-    { id: 1, name: 'Home', href: '/', icon: 'Home' },
+    { id: 1, name: 'Home', href: '/dashboard/home', icon: 'Home' },
     { id: 4, name: 'Chats', href: '/chats', icon: 'MessageCircle' },
     { id: 2, name: 'Explore servies', href: '/services', icon: 'Lightbulb' },
     { id: 3, name: 'Explore experts', href: '/experts', icon: 'Users' },

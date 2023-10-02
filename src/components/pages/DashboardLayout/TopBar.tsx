@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Icons } from '../../Icons'
 import { Badge, Input, Tooltip } from '@nextui-org/react'
 import donaldTrump from '../../../assets/trump-circle.png'
+import { Link } from 'react-router-dom'
 
 interface TopBarProps {}
 
@@ -34,14 +35,19 @@ const TopBar: FC<TopBarProps> = ({}) => {
             <Icons.Sun />
           </div>
         </Tooltip>
-        <img
-          src={donaldTrump}
-          alt='Your profile picture'
-          className='w-11 h-11'
-        />
-        <h4 className='text-md font-semibold text-slate-800 whitespace-nowrap'>
-          Donald Pump
-        </h4>
+
+        <Link to='/dashboard/profile'>
+          <div className='flex justify-center items-center gap-2 ml-4'>
+            <img
+              src={donaldTrump}
+              alt='Your profile picture'
+              className='w-11 h-11'
+            /> 
+            <h4 className='text-md font-semibold text-slate-800 whitespace-nowrap'>
+              Donald Pump
+            </h4>
+          </div>
+        </Link>
       </div>
     </div>
   )

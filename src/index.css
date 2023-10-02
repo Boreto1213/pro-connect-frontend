@@ -9,5 +9,8 @@ html {
 .heading-stroke { 
   color: white;
   -webkit-text-stroke: 4px rgb(15 118 110);
-
 }
+
+/* .teal-gradient {
+  @apply bg-gradient-to-t from-white to-teal-300;
+} */
