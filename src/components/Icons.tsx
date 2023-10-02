@@ -12,11 +12,18 @@ import {
   SunMoon,
   Bell,
   Search,
+  ChevronLeft,
+  ChevronRight,
   ChevronsRight,
   User,
   Star,
-  ArrowBigRight,
-  ArrowBigLeft
+  ThumbsUp,
+  ThumbsDown,
+  ShieldCheck,
+  Facebook,
+  Instagram,
+  Youtube,
+  Twitter,
 } from 'lucide-react'
 
 export const Icons = {
@@ -74,9 +81,18 @@ export const Icons = {
   SunMoon,
   Bell,
   Search,
+  ChevronLeft,
+  ChevronRight,
   ChevronsRight,
   User,
-  Star
+  Star,
+  ThumbsUp,
+  ThumbsDown,
+  ShieldCheck,
+  Facebook,
+  Instagram,
+  Youtube,
+  Twitter,
 }
 
 export type Icon = keyof typeof Icons

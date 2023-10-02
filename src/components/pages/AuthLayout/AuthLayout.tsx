@@ -1,9 +1,7 @@
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
-import globalNetwork from '../assets/global-network.png'
-import { Icons } from '../components/Icons'
-
-
+import globalNetwork from '../../../assets/global-network.png'
+import { Icons } from '../../Icons'
 
 const AuthLayout: FC = () => {
   return (

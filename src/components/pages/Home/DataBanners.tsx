@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { AppDataBanner } from '../types/app-data-banner'
+import { AppDataBanner } from '../../../types/app-data-banner'
 import DataBanner from './DataBanner'
 
 interface DataBannersProps {

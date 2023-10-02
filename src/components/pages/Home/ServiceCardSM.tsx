@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import donaldTrump from '../assets/trump-circle.png'
-import { Icons } from './Icons'
-import Tag from './ui/Tag'
+import donaldTrump from '../../../assets/trump-circle.png'
+import { Icons } from '../../Icons'
+import Tag from '../../ui/Tag'
 
 interface ServiceCardSMProps {}
 
@@ -15,11 +15,11 @@ const ServiceCardSM: FC<ServiceCardSMProps> = ({}) => {
             alt='Your profile picture'
             className='w-11 h-11'
           />
-          <div className="flex flex-col items-start gap-0">
-          <p className='text-lg font-semibold text-slate-700'>Donald Pump</p>
-          <p className="text-xs font-semibold text-teal-400">
-            Proffecional dictator
-          </p>
+          <div className='flex flex-col items-start gap-0'>
+            <p className='text-lg font-semibold text-slate-700'>Donald Pump</p>
+            <p className='text-xs font-semibold text-teal-400'>
+              Proffecional dictator
+            </p>
           </div>
         </div>
         <div className='flex justify-center items-center gap-2'>
@@ -28,7 +28,7 @@ const ServiceCardSM: FC<ServiceCardSMProps> = ({}) => {
               <Icons.Star className='w-4 h-4 text-gray-400' /> 1,233 reviews
             </span>
             <span className='flex justify-center items-center gap-1 text-sm text-semibold text-gray-400'>
-            <Icons.User className='w-4 h-4 text-gray-400' />
+              <Icons.User className='w-4 h-4 text-gray-400' />
               3,543 users
             </span>
           </div>
@@ -38,7 +38,10 @@ const ServiceCardSM: FC<ServiceCardSMProps> = ({}) => {
           </span>
         </div>
       </div>
-      <h3 className='mt-4'>Online consulations on how to conquer the world with a proffecional dictator.</h3>
+      <h3 className='mt-4'>
+        Online consulations on how to conquer the world with a proffecional
+        dictator.
+      </h3>
       <div className='flex justify-between w-full mt-4'>
         <div className='flex items-end w-full gap-1'>
           <Tag>politics</Tag>

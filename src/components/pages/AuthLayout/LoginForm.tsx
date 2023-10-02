@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Button from './ui/Button'
+import Button from '../../ui/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -26,7 +26,7 @@ const LoginForm: FC = ({}) => {
 
   const onSubmit = (data: FieldValues) => {
     console.log(data)
-    navigate('/dashboard')
+    navigate('/dashboard/home')
   }
 
   return (

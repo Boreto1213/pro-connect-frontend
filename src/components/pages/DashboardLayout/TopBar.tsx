@@ -1,13 +1,13 @@
 import { FC } from 'react'
-import { Icons } from './Icons'
+import { Icons } from '../../Icons'
 import { Badge, Input, Tooltip } from '@nextui-org/react'
-import donaldTrump from '../assets/trump-circle.png'
+import donaldTrump from '../../../assets/trump-circle.png'
 
 interface TopBarProps {}
 
 const TopBar: FC<TopBarProps> = ({}) => {
   return (
-    <div className='flex justify-between items-center w-screen h-[100px] px-8 border-b-1 border-gray-200'>
+    <div className='sticky top-0 z-20 flex justify-between items-center w-screen h-[100px] px-8 border-b-1 border-gray-200 bg-white'>
       <div className='flex justify-center items-center gap-2'>
         <Icons.Logo />
         <h1 className='text-4xl font-semibold text-teal-500'>
