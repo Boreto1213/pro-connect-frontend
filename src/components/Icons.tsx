@@ -24,6 +24,8 @@ import {
   Instagram,
   Youtube,
   Twitter,
+  Globe,
+  Clipboard,
 } from 'lucide-react'
 
 export const Icons = {
@@ -93,6 +95,8 @@ export const Icons = {
   Instagram,
   Youtube,
   Twitter,
+  Globe,
+  Clipboard,
 }
 
 export type Icon = keyof typeof Icons
