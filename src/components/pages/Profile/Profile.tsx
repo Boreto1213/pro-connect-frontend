@@ -67,7 +67,7 @@ const Profile: FC<ProfileProps> = ({}) => {
                 >
                   Manage services
                 </Link>
-                <button onClick={onClick}>
+                <button onClick={() => onClick('EXAMPLE_ID')}>
                   <span className='flex gap-1 px-2 py-1.5 rounded-md text-rose-500 hover:bg-rose-500 hover:text-white group'>
                     <Icons.Trash2 className='w-4 h-4 text-rose-500 group-hover:text-white' />{' '}
                     Terminate profile
