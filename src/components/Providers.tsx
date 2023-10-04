@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
-import { Toaster } from 'react-hot-toast'
+// import { Toaster } from 'react-hot-toast'
+import { Toaster } from 'sonner'
 import {NextUIProvider} from '@nextui-org/react'
 
 interface ProvidersProps {
@@ -9,7 +10,7 @@ interface ProvidersProps {
 const Providers: FC<ProvidersProps> = ({ children }) => {
   return (
     <>
-      <Toaster position='top-center' reverseOrder={false} />
+      <Toaster position='top-center' richColors />
       <NextUIProvider>{children}</NextUIProvider>
     </>
   )

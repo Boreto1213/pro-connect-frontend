@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import Button from '../../ui/Button'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import { RadioGroup, Radio } from '@nextui-org/radio'
 
 const schema = z.object({
