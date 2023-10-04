@@ -46,7 +46,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({}) => {
           </span>
         </div>
       </div>
-      <div className='flex flex-col justify-start items-center gap-8 w-[50%]'>
+      <div className='flex flex-col justify-start items-end gap-8 w-[50%]'>
         <ServiceCardSM />
         <ServiceCardSM />
         <ServiceCardSM />
