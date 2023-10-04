@@ -26,6 +26,10 @@ import {
   Twitter,
   Globe,
   Clipboard,
+  X,
+  Menu,
+  Trash2,
+  FileEdit,
 } from 'lucide-react'
 
 export const Icons = {
@@ -97,6 +101,10 @@ export const Icons = {
   Twitter,
   Globe,
   Clipboard,
+  X,
+  Menu,
+  Trash2,
+  FileEdit,
 }
 
 export type Icon = keyof typeof Icons

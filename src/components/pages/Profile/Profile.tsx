@@ -1,13 +1,35 @@
 import { FC } from 'react'
 import donaldTrump from '../../../assets/trump-circle.png'
-import Button from '../../ui/Button'
-import { Tabs, Tab } from '@nextui-org/react'
+import { Link, Outlet } from 'react-router-dom'
 import { Icons } from '../../Icons'
-import ServiceCardSM from '../Home/ServiceCardSM'
+import {
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@nextui-org/react'
+import { toast } from 'sonner'
 
 interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = ({}) => {
+  const onClick = (userId: string) => {
+    fetch(`http://localhost:8080/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then((response) => {
+      if (response.ok) {
+        toast.success('Account deleted.')
+      } 
+
+      throw new Error('Response was not okay')
+    }).catch((error) => {
+      toast.error('Something went wrong. Please try again later.')
+    })
+  }
+
   return (
     <div className='w-full flex flex-col mt-10'>
       <div className='relative z-10 flex justify-between items-center gradient'>
@@ -18,67 +40,46 @@ const Profile: FC<ProfileProps> = ({}) => {
             className='w-40 h-40 rounded-full'
           />
           <div className='flex flex-col w-full mb-3'>
-            <p className='text-3xl font-semibold text-slate-700'>
-              Jimmy Italiano
+            <p className='text-3xl font-semibold text-slate-700'>Donald Pump</p>
+            <p className='text-xl font-semibold text-teal-400'>
+              Professional dictator
             </p>
-            <p className='text-xl font-semibold text-teal-400'>Party maker</p>
           </div>
         </div>
-        <div className='flex items-end h-full gap-1 mb-5'>
-          <Button variant='slate'>Edit profile</Button>
-          <Button>Add service</Button>
+        <div className='flex items-end h-full gap-1 mt-10'>
+          <Popover placement='left'>
+            <PopoverTrigger>
+              <Button variant='faded'>
+                <Icons.Menu className='w-8 h-8' />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className='flex flex-col py-0.5'>
+                <Link
+                  to='edit'
+                  className='px-2 py-1.5 rounded-md hover:bg-gray-300'
+                >
+                  Edit profile
+                </Link>
+                <Link
+                  to='example'
+                  className='px-2 py-1.5 rounded-md hover:bg-gray-300'
+                >
+                  Manage services
+                </Link>
+                <button onClick={onClick}>
+                  <span className='flex gap-1 px-2 py-1.5 rounded-md text-rose-500 hover:bg-rose-500 hover:text-white group'>
+                    <Icons.Trash2 className='w-4 h-4 text-rose-500 group-hover:text-white' />{' '}
+                    Terminate profile
+                  </span>
+                </button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
       <div className='flex mt-14'>
-        <div className='flex flex-col items-start gap-8 w-[50%]'>
-          <p className='text-md font-medium '>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-            deleniti ipsa quae numquam. Perferendis, reprehenderit. Facere amet
-            consectetur consequatur reiciendis culpa quod ut voluptatibus
-            quisquam minima nemo. Magnam et rerum nesciunt quibusdam eveniet,
-            enim eaque unde non quo delectus sit neque nulla ratione reiciendis,
-            repudiandae tempore libero. Voluptatem, optio neque repellat,
-            delectus obcaecati vel unde corporis sapiente ex velit vero illum
-            in, accusantium dolore quo reprehenderit voluptates? Quod
-            consectetur dolorum nulla ex unde architecto magni, tempora ullam
-            itaque voluptate voluptatum quisquam nesciunt consequatur optio, ab,
-            ut iusto eos saepe error fugit minus suscipit? Porro expedita ut
-            vero pariatur temporibus modi ipsam animi molestiae dicta eaque
-            optio neque ad repellat vitae totam hic recusandae odio saepe iste
-            cupiditate, nisi sed!
-          </p>
-          <div className='flex flex-col items-start gap-2'>
-            <span className='flex justify-center items-center gap-1 text-md text-semibold text-gray-400'>
-              <Icons.ShieldCheck className='w-4 h-4 text-gray-400' />7 years of
-              experience as Party maker
-            </span>
-            <span className='flex justify-center items-center gap-1 text-md text-semibold text-gray-400'>
-              <Icons.Globe className='w-4 h-4 text-gray-400' />
-              www.donaldpump.com
-            </span>
-            <span className='flex justify-center items-center gap-1 text-md text-semibold text-gray-400'>
-              <Icons.Clipboard className='w-4 h- text-gray-400' />
-              CV here
-            </span>
-            <span className='flex justify-center items-center gap-1 text-md text-semibold text-gray-400'>
-              <Icons.User className='w-4 h-4 text-gray-400' />
-              3,543 clients
-            </span>
-            <span className='flex justify-center items-center gap-1 text-lg text-semibold text-teal-400'>
-              <Icons.ThumbsUp className='w-4 h- text-teal-400' />
-              79% would work again
-            </span>
-          </div>
-        </div>
-        <div className='flex flex-col justify-start items-center gap-8 w-[50%]'>
-          <ServiceCardSM />
-          <ServiceCardSM />
-          <ServiceCardSM />
-          <ServiceCardSM />
-          <ServiceCardSM />
-
-
-        </div>
+        <Outlet />
       </div>
     </div>
   )
