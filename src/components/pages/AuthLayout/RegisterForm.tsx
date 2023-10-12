@@ -6,6 +6,7 @@ import Button from '../../ui/Button'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { RadioGroup, Radio } from '@nextui-org/radio'
+import usersAPI from '../../../api/api-users'
 
 const schema = z.object({
   isExpert: z
@@ -37,28 +38,14 @@ const RegisterForm: FC = () => {
 
   const onSubmit = (data: FormData) => {
     const formattedData = { ...data, isExpert: data.isExpert === 'expert' }
-    console.log(formattedData)
-    console.log(JSON.stringify(formattedData))
 
-    fetch('http://localhost:8080/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formattedData),
-    })
-      .then((response) => {
-        if (response.ok) {
-          if (!response.ok) {
-            throw new Error('Network response was not ok')
-          }
-          return response.json()
-        }
-      })
-      .then((data) => {
-        toast.success('Registration sucessful.')
+    usersAPI
+      .create(formattedData)
+      .then((_) => {
+        toast.success('Registration successful.')
       })
       .catch((error) => {
+        // Add existing email error message
         toast.error('Something went wrong. Please try again.')
       })
   }

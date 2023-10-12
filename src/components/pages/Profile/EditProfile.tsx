@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import Button from '../../ui/Button'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
+import usersAPI from '../../../api/api-users'
 
 interface EditProfileProps {}
 
@@ -43,26 +44,8 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
   const onSubmit = (data: FormData) => {
-    fetch('http://localhost:8080/users', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        }
-
-        throw new Error('Network response was not ok')
-      })
-      .then((data) => {
-        toast.success('Profile info updated.')
-      })
-      .catch((error) => {
-        toast.error('Something went wrong. Please try again later.')
-      })
+    // add the id dynamically
+    usersAPI.update({...data, id: 1}). then()
   }
   return (
     <form
