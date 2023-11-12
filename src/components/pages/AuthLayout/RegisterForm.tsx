@@ -38,7 +38,7 @@ const RegisterForm: FC = () => {
 
   const onSubmit = (data: FormData) => {
     const formattedData = { ...data, isExpert: data.isExpert === 'expert' }
-
+    
     usersAPI
       .create(formattedData)
       .then((_) => {

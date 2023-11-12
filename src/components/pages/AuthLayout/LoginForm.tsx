@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import usersAPI from '../../../api/api-users'
+import { toast } from 'sonner'
 
 const schema = z.object({
   email: z.string().email(),
@@ -24,9 +26,13 @@ const LoginForm: FC = ({}) => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data)
-    navigate('/dashboard/home')
+  const onSubmit = (data: FormData) => {
+    usersAPI.login(data).then((_) => {
+      navigate('/dashboard/home')
+    }).catch((error) => {
+      toast.error("Something went wrong. Please try again.")
+    })
+   
   }
 
   return (
