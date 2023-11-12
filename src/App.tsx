@@ -9,6 +9,8 @@ import Home from './components/pages/Home/Home'
 import Profile from './components/pages/Profile/Profile'
 import ProfileInfo from './components/pages/Profile/ProfileInfo'
 import EditProfile from './components/pages/Profile/EditProfile'
+import Unauthorized from './components/pages/Unauthorized/Unauthorized'
+import NotFound from './components/pages/NotFound/NotFound'
 
 const router = createBrowserRouter([
   { path: '/', element: <Navigate to='/auth/login' /> },
@@ -20,13 +22,24 @@ const router = createBrowserRouter([
       { path: 'register', element: <RegisterForm /> },
     ],
   },
-  { path: '/dashboard', element: <DashboardLayout />, children: [
-    { path: 'home', element: <Home />},
-    { path: 'profile', element: <Profile />, children: [
-      { index: true, element: <ProfileInfo />},
-      { path: 'edit', element: <EditProfile />}
-    ]}
-  ] },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      { path: 'home', element: <Home /> },
+      {
+        path: 'profile',
+        element: <Profile />,
+        children: [
+          { index: true, element: <ProfileInfo /> },
+          { path: 'edit', element: <EditProfile /> },
+        ],
+      },
+      { path: 'unauthorized', element: <Unauthorized /> },
+    ],
+  },
+  { path: '*', element: <NotFound /> },
+
 ])
 
 function App() {

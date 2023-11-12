@@ -1,11 +1,14 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import Button from '../../ui/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import usersAPI from '../../../api/api-users'
 import { toast } from 'sonner'
+import { AuthContext } from '../../../context/AuthProvider'
+import { AxiosError } from 'axios'
+import { getUserRole } from '../../../lib/utils'
 
 const schema = z.object({
   email: z.string().email(),
@@ -19,6 +22,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 const LoginForm: FC = ({}) => {
+  const { setAuth } = useContext(AuthContext)
   const navigate = useNavigate()
   const {
     register,
@@ -26,13 +30,30 @@ const LoginForm: FC = ({}) => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const onSubmit = (data: FormData) => {
-    usersAPI.login(data).then((_) => {
-      navigate('/dashboard/home')
-    }).catch((error) => {
-      toast.error("Something went wrong. Please try again.")
-    })
-   
+  const onSubmit = (formData: FormData) => {
+    usersAPI
+      .login(formData)
+      .then((data) => {
+        setAuth({
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+          password: formData.password,
+          email: formData.password,
+          role: getUserRole(data.accessToken),
+        })
+        navigate('/dashboard/home')
+      })
+      .catch((error: AxiosError) => {
+        if (!error?.response) {
+          toast.error('No server response. Please try again.')
+        } else if (error.response?.status == 400) {
+          toast.error('Wrong credentials. Please try again.')
+        } else if (error.response?.status == 401) {
+          toast.error('Unauthorized.')
+        } else {
+          toast.error('Wrong credentials. Please try again.')
+        }
+      })
   }
 
   return (

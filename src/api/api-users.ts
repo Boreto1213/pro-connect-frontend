@@ -8,7 +8,9 @@ type LoginRequest = {
 class UserService<T> extends APIClient<T> {
   login = (body: LoginRequest) => {
     return this.axiosInstance
-      .post('/auth/authenticate', body)
+      .post('/auth/authenticate', body, {
+        headers: { 'Content-Type': 'application/json' },
+      })
       .then((res) => res.data)
   }
 }

@@ -3,6 +3,10 @@
   transition: filter 300ms;
 }
 
+.height-screen-minus-100 {
+  height: calc(100vh - 180px);
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
