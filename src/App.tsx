@@ -12,6 +12,7 @@ import EditProfile from './components/pages/Profile/EditProfile'
 import Unauthorized from './components/pages/Unauthorized/Unauthorized'
 import NotFound from './components/pages/NotFound/NotFound'
 import RequireAuth from './components/RequireAuth'
+import ExploreServices from './components/pages/ExploreServices/ExploreServices'
 
 enum Roles {
   EXPERT = 'Expert',
@@ -48,7 +49,12 @@ const router = createBrowserRouter([
           },
         ],
       },
-
+      {
+        element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
+        children: [
+          {path: 'services', element: <ExploreServices />}
+        ]
+      },
       { path: 'unauthorized', element: <Unauthorized /> },
     ],
   },
