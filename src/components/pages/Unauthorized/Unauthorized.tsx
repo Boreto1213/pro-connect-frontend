@@ -7,8 +7,11 @@ interface UnauthorizedProps {}
 
 const Unauthorized: FC<UnauthorizedProps> = ({}) => {
   const navigate = useNavigate()
+
+  const goBack = () => navigate(-1)
+
   return (
-    <div className='flex flex-col items-center gap-5 w-full pt-10'>
+    <div className='flex flex-col height-screen-minus-280 items-center gap-5 w-full pt-10'>
       <Icons.Unauthorized />
       <div className='flex flex-col gap-1 items-center justify-center'>
       <h1 className='text-7xl text-gray-700 text-semibold'>Ops...</h1>
@@ -18,7 +21,7 @@ const Unauthorized: FC<UnauthorizedProps> = ({}) => {
 
       </div>
 
-      <Button onClick={() => navigate(-1)}>Go back</Button>
+      <Button onClick={goBack}>Go back</Button>
     </div>
   )
 }

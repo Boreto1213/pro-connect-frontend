@@ -11,7 +11,12 @@ import ProfileInfo from './components/pages/Profile/ProfileInfo'
 import EditProfile from './components/pages/Profile/EditProfile'
 import Unauthorized from './components/pages/Unauthorized/Unauthorized'
 import NotFound from './components/pages/NotFound/NotFound'
+import RequireAuth from './components/RequireAuth'
 
+enum Roles {
+  EXPERT = 'Expert',
+  CLIENT = 'Client',
+}
 const router = createBrowserRouter([
   { path: '/', element: <Navigate to='/auth/login' /> },
   {
@@ -26,20 +31,28 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
     children: [
-      { path: 'home', element: <Home /> },
       {
-        path: 'profile',
-        element: <Profile />,
+        element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
+        children: [{ path: 'home', element: <Home /> }],
+      },
+      {
+        element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
         children: [
-          { index: true, element: <ProfileInfo /> },
-          { path: 'edit', element: <EditProfile /> },
+          {
+            path: 'profile',
+            element: <Profile />,
+            children: [
+              { index: true, element: <ProfileInfo /> },
+              { path: 'edit', element: <EditProfile /> },
+            ],
+          },
         ],
       },
+
       { path: 'unauthorized', element: <Unauthorized /> },
     ],
   },
   { path: '*', element: <NotFound /> },
-
 ])
 
 function App() {

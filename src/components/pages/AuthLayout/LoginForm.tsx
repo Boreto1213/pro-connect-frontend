@@ -1,14 +1,14 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import Button from '../../ui/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import usersAPI from '../../../api/api-users'
 import { toast } from 'sonner'
-import { AuthContext } from '../../../context/AuthProvider'
 import { AxiosError } from 'axios'
 import { getUserRole } from '../../../lib/utils'
+import useAuth from '../../../hooks/useAuth'
 
 const schema = z.object({
   email: z.string().email(),
@@ -22,7 +22,9 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 const LoginForm: FC = ({}) => {
-  const { setAuth } = useContext(AuthContext)
+  const { setAuth } = useAuth()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/dashboard/home'
   const navigate = useNavigate()
   const {
     register,
@@ -41,7 +43,7 @@ const LoginForm: FC = ({}) => {
           email: formData.password,
           role: getUserRole(data.accessToken),
         })
-        navigate('/dashboard/home')
+        navigate(from, { replace: true })
       })
       .catch((error: AxiosError) => {
         if (!error?.response) {
