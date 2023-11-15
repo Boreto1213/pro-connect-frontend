@@ -30,6 +30,7 @@ import {
   Menu,
   Trash2,
   FileEdit,
+  DollarSign
 } from 'lucide-react'
 
 export const Icons = {
@@ -442,6 +443,7 @@ export const Icons = {
   Menu,
   Trash2,
   FileEdit,
+  DollarSign
 }
 
 export type Icon = keyof typeof Icons
