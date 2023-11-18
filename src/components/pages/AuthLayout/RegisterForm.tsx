@@ -3,10 +3,10 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import Button from '../../ui/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { RadioGroup, Radio } from '@nextui-org/radio'
-import usersAPI from '../../../api/api-users'
+import useAuthService from '../../../hooks/useAuthService'
 
 const schema = z.object({
   isExpert: z
@@ -35,17 +35,22 @@ const RegisterForm: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
+  const authService = useAuthService()
+  const navigate = useNavigate()
 
   const onSubmit = (data: FormData) => {
     const formattedData = { ...data, isExpert: data.isExpert === 'expert' }
-    
-    usersAPI
-      .create(formattedData)
+
+    authService
+      .register(formattedData)
       .then((_) => {
         toast.success('Registration successful.')
+        navigate("/auth/login")
       })
       .catch((error) => {
         // Add existing email error message
+        console.log(error)
+
         toast.error('Something went wrong. Please try again.')
       })
   }

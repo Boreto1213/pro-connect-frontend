@@ -6,7 +6,7 @@ import {
 } from 'react'
 import { Auth, AuthContextType } from '../types/auth'
 
-const defaultAuthValue = { accessToken: '', refreshToken: '', email: '', password: '', role: '' }
+const defaultAuthValue = { accessToken: '', refreshToken: '', id: 0, role: '' }
 
 export const AuthContext = createContext<AuthContextType>({
   auth: defaultAuthValue,

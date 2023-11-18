@@ -3,8 +3,7 @@ import { Dispatch, SetStateAction } from "react"
 export type Auth = {
   accessToken: string
   refreshToken: string
-  email: string
-  password: string
+  id: number
   role: string
 }
 

@@ -1,12 +1,15 @@
 import { FC } from 'react'
 import { AppDataBanner } from '../../../types/app-data-banner'
 import DataBanner from './DataBanner'
+import { log } from 'console'
 
 interface DataBannersProps {
   data: AppDataBanner[]
 }
 
 const DataBanners: FC<DataBannersProps> = ({ data }) => {
+  console.log(data);
+  
   return (
     <div className='flex justify-between items-center'>
       <DataBanner

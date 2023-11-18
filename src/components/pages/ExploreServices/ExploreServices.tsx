@@ -1,13 +1,9 @@
 import { FC, useEffect, useState } from 'react'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
-import { Input } from '@nextui-org/react'
-import { Icons } from '../../Icons'
 import ServiceFilter from './ServiceFilter'
 import ServiceCardMD from './ServiceCardMD'
 
-interface ExploreServicesProps {
-  
-}
+interface ExploreServicesProps {}
 
 const ExploreServices: FC<ExploreServicesProps> = ({}) => {
   const [services, setServices] = useState<Service[]>([])

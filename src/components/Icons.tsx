@@ -122,6 +122,7 @@ export const Icons = {
   ),
   NotFound: (props: LucideProps) => (
     <svg
+    {...props}
       height='200px'
       width='200px'
       viewBox='0 0 64 64'

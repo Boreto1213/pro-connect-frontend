@@ -76,8 +76,8 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
 
   <h5 className='text-md text-semibold text-gray-700'>Categories:</h5>
   <div className="flex flex-wrap gap-1">
-    {categories.length && categories.map(c => (
-      <CategoryBox category={c} />
+    {categories.length && categories.map((c, i) => (
+      <CategoryBox key={i} category={c} />
     ))}
   </div>
 </div>

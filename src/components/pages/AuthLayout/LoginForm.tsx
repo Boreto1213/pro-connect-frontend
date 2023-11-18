@@ -4,11 +4,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import usersAPI from '../../../api/api-users'
 import { toast } from 'sonner'
 import { AxiosError } from 'axios'
-import { getUserRole } from '../../../lib/utils'
+import { getPayloadData } from '../../../lib/utils'
 import useAuth from '../../../hooks/useAuth'
+import useAuthService from '../../../hooks/useAuthService'
 
 const schema = z.object({
   email: z.string().email(),
@@ -31,30 +31,24 @@ const LoginForm: FC = ({}) => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
+  const authService = useAuthService()
 
   const onSubmit = (formData: FormData) => {
-    usersAPI
+    authService
       .login(formData)
       .then((data) => {
         setAuth({
           accessToken: data.accessToken,
           refreshToken: data.refreshToken,
-          password: formData.password,
-          email: formData.password,
-          role: getUserRole(data.accessToken),
+          id: getPayloadData(data.accessToken, 'sub'),
+          role: getPayloadData(data.accessToken, 'role'),
         })
         navigate(from, { replace: true })
       })
       .catch((error: AxiosError) => {
         if (!error?.response) {
           toast.error('No server response. Please try again.')
-        } else if (error.response?.status == 400) {
-          toast.error('Wrong credentials. Please try again.')
-        } else if (error.response?.status == 401) {
-          toast.error('Unauthorized.')
-        } else {
-          toast.error('Wrong credentials. Please try again.')
-        }
+        } 
       })
   }
 

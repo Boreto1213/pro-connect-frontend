@@ -1,52 +1,47 @@
 import { FC } from 'react'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Button from '../../ui/Button'
 import { Link } from 'react-router-dom'
+import EditProfileFormData, {
+  schema,
+} from '../../../types/edit-profile-form-data'
+import useAuth from '../../../hooks/useAuth'
+import useUserService from '../../../hooks/useUserService'
 import { toast } from 'sonner'
-import usersAPI from '../../../api/api-users'
 
 interface EditProfileProps {}
 
-const schema = z.object({
-  firstName: z.string().nonempty().max(50),
-  lastName: z.string().nonempty().max(50),
-  profession: z.string().nonempty().max(50),
-  experience: z.number().min(1).max(50),
-  email: z.string().email().max(150),
-  password: z
-    .string()
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/
-    ),
-  phone: z.string().regex(/\+[\d]{1,3}[\d]{9}$/),
-  city: z.string().min(2).max(50),
-  address: z.string().min(2).max(50),
-  website: z.string().max(100).optional(),
-  photo: z.any().refine((files) => files?.length == 1, 'Image is required.'),
-  // .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-  // .refine(
-  //   (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-  //   ".jpg, .jpeg, .png and .webp files are accepted."
-  // )
-  cv: z.any().refine((files) => files?.length == 1, 'Image is required.'),
-  bio: z.string().nonempty().max(500),
-})
-
-type FormData = z.infer<typeof schema>
-
 const EditProfile: FC<EditProfileProps> = ({}) => {
+  const { auth } = useAuth()
+  const userService = useUserService()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) })
+  } = useForm<EditProfileFormData>({ resolver: zodResolver(schema) })
 
-  const onSubmit = (data: FormData) => {
-    // add the id dynamically
-    usersAPI.update({...data, id: 1}). then()
+  const onSubmit = (data: EditProfileFormData) => {
+    userService
+      .updateUserProfile({ ...data, id: auth.id })
+      .then((res) => {
+        toast.success('Profile updated!')
+
+        return res.data
+      })
+      .catch((error) => {
+        if (!error?.response) {
+          toast.error('No response from server!')
+        } else if (error.response?.status == 400) {
+          toast.error('Something went wrong. Please try again.')
+        } else if (error.response?.status == 401) {
+          toast.error('Unauthorized.')
+        } else {
+          toast.error('Wrong credentials. Please try again.')
+        }
+      })
   }
+      
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -72,7 +67,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='First name'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.firstName && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid first name.
               </p>
@@ -93,7 +88,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='Last name'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.lastName && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid last name.
               </p>
@@ -128,14 +123,14 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               Years of experience:
             </label>
             <input
-              {...register('experience', { valueAsNumber: true })}
+              {...register('yearsOfExperience', { valueAsNumber: true })}
               value={3}
               type='text'
               name='experience'
               placeholder='Years of experience'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.experience && (
+            {errors.yearsOfExperience && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid number.
               </p>
@@ -177,7 +172,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='*************'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.password && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Password must contain at least 1 lowercase, 1 uppercase, 1
                 number, 1 symbol and be at least 8 characters long.
@@ -199,7 +194,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='Phone'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.phone && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid phone number.
               </p>
@@ -222,9 +217,9 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='Address'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.address && (
               <p className='text-sm text-red-600 font-medium mt-2'>
-                Please enter a valid addres.
+                Please enter a valid address.
               </p>
             )}
           </div>
@@ -243,7 +238,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='City'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.city && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid city.
               </p>
@@ -264,7 +259,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               placeholder='Website'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.website && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid url.
               </p>
@@ -287,7 +282,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
       file:bg-slate-50 file:text-slate-700
       hover:file:bg-slate-100'
             />
-            {errors.email && (
+            {errors.photo && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 File is not valid.
               </p>
@@ -310,7 +305,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
       file:bg-slate-50 file:text-slate-700
       hover:file:bg-slate-100'
             />
-            {errors.email && (
+            {errors.cv && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 File is not valid.
               </p>
@@ -331,7 +326,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               rows={5}
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
-            {errors.email && (
+            {errors.bio && (
               <p className='text-sm text-red-600 font-medium mt-2'>
                 Please enter a valid bio.
               </p>

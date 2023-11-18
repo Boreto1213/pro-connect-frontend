@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import donaldTrump from '../../../assets/trump-circle.png'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Icons } from '../../Icons'
 import {
   Button,
@@ -9,25 +9,36 @@ import {
   PopoverContent,
 } from '@nextui-org/react'
 import { toast } from 'sonner'
+import useUserService from '../../../hooks/useUserService'
+import useAuth from '../../../hooks/useAuth'
+import { AxiosError } from 'axios'
 
 interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = ({}) => {
-  const onClick = (userId: string) => {
-    fetch(`http://localhost:8080/users/${userId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).then((response) => {
-      if (response.ok) {
-        toast.success('Account deleted.')
-      } 
+  const { auth } = useAuth()
+  const userService = useUserService()
+  const navigate = useNavigate()
 
-      throw new Error('Response was not okay')
-    }).catch((error) => {
-      toast.error('Something went wrong. Please try again later.')
-    })
+  const onClick = () => {
+    userService
+      .deleteUserProfile(auth.id)
+      .then((_) => {
+        toast.success('Profile deleted!')
+        // Also logout and erase the auth context
+        navigate('/auth/login')
+      })
+      .catch((error: AxiosError) => {
+        if (!error.response) {
+          toast.error('No response from server!')
+        } else if (error.status === 400) {
+          toast.error('User id does not exist!')
+        } else if (error.status === 401) {
+          toast.error('Unauthorized!')
+        } else {
+          toast.error('Something went wrong!')
+        }
+      })
   }
 
   return (
@@ -67,7 +78,7 @@ const Profile: FC<ProfileProps> = ({}) => {
                 >
                   Manage services
                 </Link>
-                <button onClick={() => onClick('EXAMPLE_ID')}>
+                <button onClick={onClick}>
                   <span className='flex gap-1 px-2 py-1.5 rounded-md text-rose-500 hover:bg-rose-500 hover:text-white group'>
                     <Icons.Trash2 className='w-4 h-4 text-rose-500 group-hover:text-white' />{' '}
                     Terminate profile
