@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import { AxiosError } from 'axios'
 import { getPayloadData } from '../../../lib/utils'
 import useAuth from '../../../hooks/useAuth'
-import useAuthService from '../../../hooks/useAuthService'
+import useAuthAPI from '../../../hooks/api/useAuthAPI'
 
 const schema = z.object({
   email: z.string().email(),
@@ -31,7 +31,7 @@ const LoginForm: FC = ({}) => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
-  const authService = useAuthService()
+  const authService = useAuthAPI()
 
   const onSubmit = (formData: FormData) => {
     authService
@@ -48,7 +48,7 @@ const LoginForm: FC = ({}) => {
       .catch((error: AxiosError) => {
         if (!error?.response) {
           toast.error('No server response. Please try again.')
-        } 
+        }
       })
   }
 

@@ -8,7 +8,6 @@ interface DataBannersProps {
 }
 
 const DataBanners: FC<DataBannersProps> = ({ data }) => {
-  console.log(data);
   
   return (
     <div className='flex justify-between items-center'>

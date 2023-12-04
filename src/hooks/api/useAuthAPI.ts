@@ -1,7 +1,7 @@
-import axios from '../api/axios'
-import { LoginRequest } from '../types/login-request'
+import axios from '../../api/axios'
+import { LoginRequest } from '../../types/login-request'
 
-const useAuthService = () => {
+const useAuthAPI = () => {
   const register = (user: Omit<User, 'id'>) => {
     return axios.post('/auth/register', user)
   }
@@ -13,4 +13,4 @@ const useAuthService = () => {
   return { register, login }
 }
 
-export default useAuthService
+export default useAuthAPI

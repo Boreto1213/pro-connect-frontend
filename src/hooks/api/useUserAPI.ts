@@ -1,6 +1,6 @@
-import useAxiosPrivate from "./useAxiosPrivate"
+import useAxiosPrivate from './useAxiosPrivate'
 
-const useUserService = () => {
+const useUserAPI = () => {
   const axiosPrivate = useAxiosPrivate()
 
   const updateUserProfile = (data: UpdateUserRequest) => {
@@ -14,4 +14,4 @@ const useUserService = () => {
   return { updateUserProfile, deleteUserProfile }
 }
 
-export default useUserService
+export default useUserAPI

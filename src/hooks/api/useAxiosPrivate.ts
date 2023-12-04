@@ -1,7 +1,7 @@
-import { axiosPrivate } from '../api/axios'
+import { axiosPrivate } from '../../api/axios'
 import { useEffect } from 'react'
 import useRefreshToken from './useRefreshToken'
-import useAuth from './useAuth'
+import useAuth from '../useAuth'
 import { AxiosError, AxiosRequestConfig } from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 

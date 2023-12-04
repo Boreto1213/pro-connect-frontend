@@ -5,16 +5,16 @@ import Button from '../../ui/Button'
 import { Link } from 'react-router-dom'
 import EditProfileFormData, {
   schema,
-} from '../../../types/edit-profile-form-data'
+} from '../../../types/user/edit-profile-form-data'
 import useAuth from '../../../hooks/useAuth'
-import useUserService from '../../../hooks/useUserService'
+import useUserAPI from '../../../hooks/api/useUserAPI'
 import { toast } from 'sonner'
 
 interface EditProfileProps {}
 
 const EditProfile: FC<EditProfileProps> = ({}) => {
   const { auth } = useAuth()
-  const userService = useUserService()
+  const userService = useUserAPI()
   const {
     register,
     handleSubmit,
@@ -24,10 +24,8 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
   const onSubmit = (data: EditProfileFormData) => {
     userService
       .updateUserProfile({ ...data, id: auth.id })
-      .then((res) => {
+      .then((_) => {
         toast.success('Profile updated!')
-
-        return res.data
       })
       .catch((error) => {
         if (!error?.response) {
@@ -41,7 +39,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
         }
       })
   }
-      
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

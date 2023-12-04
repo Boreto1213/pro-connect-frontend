@@ -9,7 +9,7 @@ import {
   PopoverContent,
 } from '@nextui-org/react'
 import { toast } from 'sonner'
-import useUserService from '../../../hooks/useUserService'
+import useUserAPI from '../../../hooks/api/useUserAPI'
 import useAuth from '../../../hooks/useAuth'
 import { AxiosError } from 'axios'
 
@@ -17,7 +17,7 @@ interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = ({}) => {
   const { auth } = useAuth()
-  const userService = useUserService()
+  const userService = useUserAPI()
   const navigate = useNavigate()
 
   const onClick = () => {

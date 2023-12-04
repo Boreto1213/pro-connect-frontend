@@ -6,7 +6,7 @@ import Button from '../../ui/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { RadioGroup, Radio } from '@nextui-org/radio'
-import useAuthService from '../../../hooks/useAuthService'
+import useAuthAPI from '../../../hooks/api/useAuthAPI'
 
 const schema = z.object({
   isExpert: z
@@ -35,7 +35,7 @@ const RegisterForm: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
-  const authService = useAuthService()
+  const authService = useAuthAPI()
   const navigate = useNavigate()
 
   const onSubmit = (data: FormData) => {
@@ -45,7 +45,7 @@ const RegisterForm: FC = () => {
       .register(formattedData)
       .then((_) => {
         toast.success('Registration successful.')
-        navigate("/auth/login")
+        navigate('/auth/login')
       })
       .catch((error) => {
         // Add existing email error message
