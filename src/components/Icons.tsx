@@ -31,6 +31,7 @@ import {
   Trash2,
   FileEdit,
   DollarSign,
+  PartyPopper
 } from 'lucide-react'
 
 export const Icons = {
@@ -512,6 +513,7 @@ export const Icons = {
   Trash2,
   FileEdit,
   DollarSign,
+  PartyPopper
 }
 
 export type Icon = keyof typeof Icons

@@ -1,42 +1,70 @@
-import { FC, useEffect, useState } from 'react'
-import useAxiosPrivate from '../../../hooks/api/useAxiosPrivate'
+import { FC, useEffect } from 'react'
 import ServiceFilter from './ServiceFilter'
-import ServiceCardMD from './ServiceCardMD'
-import { Service } from '../../../types/service/service'
+import { useGetQueryParam } from '../../../hooks/useGetQueryParam'
+import { useServiceAPI } from '../../../hooks/api/useServiceAPI'
+import { toast } from 'sonner'
+import { useServices } from '../../../hooks/useServices'
+import Pagination from '../../Pagination'
+import ServicesList from './ServicesList'
+import ServiceDetailsPopup from './ServiceDetailsPopup'
 
 interface ExploreServicesProps {}
 
 const ExploreServices: FC<ExploreServicesProps> = ({}) => {
-  const [services, setServices] = useState<Service[]>([])
-  const axiosPrivate = useAxiosPrivate()
+  const { data, setData } = useServices()
+  const getQueryParam = useGetQueryParam()
+  const currentPage = Number(getQueryParam('page')) || 1
+  const { getServicesFilterCriteriaAndPage } = useServiceAPI()
 
   useEffect(() => {
     const fetchServices = async () => {
-      const res = await axiosPrivate.get('/services/expert/6')
+      const res = await getServicesFilterCriteriaAndPage(
+        currentPage,
+        data.filters.titleQuery,
+        data.filters.minPrice,
+        data.filters.maxPrice
+      )
 
-      setServices(res.data)
+      setData((prev) => ({
+        page: currentPage,
+        totalPages: res.data.totalPages,
+        services: res.data.services,
+        filters: { ...prev.filters },
+      }))
     }
 
     try {
       fetchServices()
     } catch (error) {
-      console.log('Error from component', error)
+      toast.error('Something went wrong.')
     }
 
-    return () => {}
-  }, [])
+    // reset the context filters on component dismount
+    return () => {
+      setData((prev) => ({
+        ...prev,
+        filters: { titleQuery: '', minPrice: 0, maxPrice: 1000000000 },
+      }))
+    }
+  }, [currentPage, setData])
+
+
 
   return (
     <div className='flex flex-col px-8 py-6 justify-center'>
       <div className='grid grid-cols-10 w-full gap-0'>
         <ServiceFilter />
-        <div className='col-span-7 h-full'>
-          <div className='flex flex-col gap-5 w-full'>
-            {services.length &&
-              services.map((s) => <ServiceCardMD key={s.id} service={s} />)}
-          </div>
+        <ServicesList services={data.services} />
+        <div className='col-span-10'>
+          <Pagination
+            url={'/dashboard/services?page='}
+            totalPages={data.totalPages}
+            currentPage={currentPage}
+          />
         </div>
       </div>
+
+      <ServiceDetailsPopup />
     </div>
   )
 }

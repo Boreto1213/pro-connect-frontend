@@ -1,4 +1,5 @@
 import { CreateServiceRequest } from '../../types/service/create-service-request'
+import { GetServiceResponse, Service } from '../../types/service/service'
 import useAxiosPrivate from './useAxiosPrivate'
 
 export const useServiceAPI = () => {
@@ -8,7 +9,24 @@ export const useServiceAPI = () => {
     return axiosPrivate.post('/services', data)
   }
 
-  return { createService }
+  const getServiceById = (serviceId: number) => {
+    return axiosPrivate.get<Service>(`/services/${serviceId}`)
+  }
+
+  const getServicesByPage = (page: number) => {
+    return axiosPrivate.get<GetServiceResponse>(`/services?page=${page}`)
+  }
+
+  const getServicesFilterCriteriaAndPage = (
+    page: number,
+    titleQuery: string,
+    minPrice: number,
+    maxPrice: number
+  ) => {
+    return axiosPrivate.get<GetServiceResponse>(
+      `/services/filter?page=${page}&titleQuery=${titleQuery}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+    )
+  }
+
+  return { createService, getServicesByPage, getServicesFilterCriteriaAndPage, getServiceById }
 }
-
-

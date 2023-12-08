@@ -1,15 +1,16 @@
-import { FC } from 'react'
+import { FC, HTMLAttributes } from 'react'
 import donaldTrump from '../../../assets/trump-circle.png'
 import { Icons } from '../../Icons'
 import Tag from '../../ui/Tag'
+import { Service } from '../../../types/service/service'
 
-interface ServiceCardMDProps {
+interface ServiceCardMDProps extends HTMLAttributes<HTMLDivElement>{
   service: Service
 }
 
-const ServiceCardMD: FC<ServiceCardMDProps> = ({ service }) => {
+const ServiceCardMD: FC<ServiceCardMDProps> = ({ service, onClick, ...props }) => {
   return (
-    <div className='w-full max-w-3xl bg-gray-50 px-8 py-6 rounded-lg shadow-sm transition-all hover:brightness-95 cursor-pointer'>
+    <div {...props} onClick={onClick} className='w-full max-w-3xl bg-gray-50 px-8 py-6 rounded-lg shadow-sm transition-all hover:brightness-95 cursor-pointer'>
       <div className='flex justify-between items-center'>
         <div className='flex start-center items-center gap-2'>
           <img

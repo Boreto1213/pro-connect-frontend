@@ -1,13 +1,21 @@
 import { Input } from '@nextui-org/react'
-import { FC, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import { Icons } from '../../Icons'
 import CategoryBox from '../../CategoryBox'
 import { Category } from '../../../types/service/category'
+import { useServiceAPI } from '../../../hooks/api/useServiceAPI'
+import { useServices } from '../../../hooks/useServices'
 
 interface ServiceFilterProps {}
 
 const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
+  const { data, setData } = useServices()
+  const { getServicesFilterCriteriaAndPage } = useServiceAPI()
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
+  const titleInputRef = useRef<HTMLInputElement>(null)
+  const minPriceInputRef = useRef<HTMLInputElement>(null)
+  const maxPriceInputRef = useRef<HTMLInputElement>(null)
+
   const categories = [
     { text: 'Gym', id: 0 },
     { text: 'healthcare', id: 1 },
@@ -41,9 +49,28 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
     { text: 'science', id: 29 },
     { text: 'finances', id: 30 },
     { text: 'entrepreneurship', id: 31 },
-    { text: 'business', id: 32 }
-]
+    { text: 'business', id: 32 },
+  ]
 
+  const onChange = () => {
+    getServicesFilterCriteriaAndPage(
+      data.page,
+      titleInputRef.current!.value,
+      Number(minPriceInputRef.current!.value),
+      Number(maxPriceInputRef.current!.value || 1000000000)
+    ).then((res) => {
+      setData((prev) => ({
+      ...prev,
+      services: res.data.services,
+      totalPages: res.data.totalPages,
+      filters: {
+          titleQuery: titleInputRef.current!.value,
+          minPrice: Number(minPriceInputRef.current!.value),
+          maxPrice: Number(maxPriceInputRef.current!.value || 1000000000),
+        },
+      }))
+    })
+  }
 
   return (
     <div className='flex flex-col sticky top-28 gap-3 col-span-3 h-full px-8'>
@@ -54,6 +81,8 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
         type='text'
         placeholder='Search for services...'
         labelPlacement='outside'
+        ref={titleInputRef}
+        onChange={onChange}
         endContent={
           <Icons.Search className='text-2xl text-slate-400 pointer-events-none flex-shrink-0' />
         }
@@ -64,6 +93,8 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
           type='number'
           placeholder='Min.'
           labelPlacement='outside'
+          ref={minPriceInputRef}
+          onChange={onChange}
           endContent={
             <Icons.DollarSign className='text-2xl text-slate-400 pointer-events-none flex-shrink-0' />
           }
@@ -72,6 +103,9 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
           type='number'
           placeholder='Max.'
           labelPlacement='outside'
+          ref={maxPriceInputRef}
+          onChange={onChange}
+          max={999999999}
           endContent={
             <Icons.DollarSign className='text-2xl text-slate-400 pointer-events-none flex-shrink-0' />
           }
@@ -81,7 +115,13 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
       <h5 className='text-md text-semibold text-gray-700'>Categories:</h5>
       <div className='flex flex-wrap gap-1'>
         {categories.length &&
-          categories.map((c, i) => <CategoryBox key={i} category={c} setSelectedCategories={setSelectedCategories} />)}
+          categories.map((c, i) => (
+            <CategoryBox
+              key={i}
+              category={c}
+              setSelectedCategories={setSelectedCategories}
+            />
+          ))}
       </div>
     </div>
   )

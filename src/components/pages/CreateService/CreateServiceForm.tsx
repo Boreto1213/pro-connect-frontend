@@ -79,7 +79,6 @@ const CreateServiceForm: FC<CreateServiceFormProps> = ({}) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
   const onSubmit = (data: FormData) => {
-    // console.log({ ...data, categories: selectedCategories })
     serviceAPI
       .createService({ ...data, tags: selectedCategories, expertId: id })
       .then((_) => {
