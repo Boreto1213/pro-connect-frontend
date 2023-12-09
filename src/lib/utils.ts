@@ -14,3 +14,7 @@ const payloadObj = JSON.parse(decodedPayload);
 
 return payloadObj[field];
 }
+
+export function isNumerical(string: string) {
+  return string && !isNaN(parseFloat(string))
+}

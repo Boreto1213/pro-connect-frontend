@@ -31,7 +31,7 @@ import {
   Trash2,
   FileEdit,
   DollarSign,
-  PartyPopper
+  PartyPopper,
 } from 'lucide-react'
 
 export const Icons = {

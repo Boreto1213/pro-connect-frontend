@@ -8,6 +8,8 @@ import { Service } from '../../../types/service/service'
 import { useServiceAPI } from '../../../hooks/api/useServiceAPI'
 import donaldPump from '../../../assets/trump-circle.png'
 import { toast } from 'sonner'
+import ReviewContainer from './ReviewContainer'
+import { isNumerical } from '../../../lib/utils'
 
 
 interface ServiceDetailsPopupProps {}
@@ -25,7 +27,7 @@ const ServiceDetailsPopup: FC<ServiceDetailsPopupProps> = ({}) => {
 
   useEffect(() => {
     // check if service id is present and is a number
-    if (selectedServiceId && !isNaN(parseFloat(selectedServiceId))) {
+    if (selectedServiceId && isNumerical(selectedServiceId)) {
       getServiceById(Number(selectedServiceId))
         .then((res) => {
           setSelectedService(res.data)
@@ -95,9 +97,7 @@ const ServiceDetailsPopup: FC<ServiceDetailsPopupProps> = ({}) => {
             </Link>
           </div>
           {seeReviews && (
-            <div className='flex justify-center items-center w-full h-[500px] bg-rose-500 text-white'>
-              Reviews Section
-            </div>
+            <ReviewContainer />
           )}
         </DialogHeader>
       </DialogContent>
