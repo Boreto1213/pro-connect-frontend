@@ -41,6 +41,9 @@ const LoginForm: FC = ({}) => {
           accessToken: data.accessToken,
           refreshToken: data.refreshToken,
           id: getPayloadData(data.accessToken, 'sub'),
+          firstName: data.firstName,
+          lastName: data.lastName,
+          profileImageUrl: data.profileImageUrl,
           role: getPayloadData(data.accessToken, 'role'),
         })
         navigate(from, { replace: true })
@@ -48,6 +51,8 @@ const LoginForm: FC = ({}) => {
       .catch((error: AxiosError) => {
         if (!error?.response) {
           toast.error('No server response. Please try again.')
+        } else if (error.response.status === 401) {
+          toast.error('Invalid login credentials.')
         }
       })
   }

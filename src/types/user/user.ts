@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: number
   email: string
   password?: string
@@ -7,9 +7,10 @@ interface User {
   phone: string
   city: string
   address: string
+  profileImageUrl: string
 }
 
-interface Expert extends User {
+export interface Expert extends User {
   bio: string
   dislikes: number
   likes: number
@@ -17,18 +18,18 @@ interface Expert extends User {
   yearsOfExperience: number
 }
 
-interface Client extends User {}
+export interface Client extends User {}
 
-interface UpdateUserRequest {
+export interface UpdateUserRequest {
   id: number
   email: string
-  password?: string
+  // password: string
   firstName: string
   lastName: string
   phone: string
   city: string
   address: string
-  bio: string
-  profession: string
-  yearsOfExperience: number
+  bio?: string
+  profession?: string
+  yearsOfExperience?: number
 }

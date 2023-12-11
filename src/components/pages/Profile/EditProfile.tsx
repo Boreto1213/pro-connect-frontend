@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Button from '../../ui/Button'
@@ -15,7 +15,9 @@ interface EditProfileProps {}
 const EditProfile: FC<EditProfileProps> = ({}) => {
   const { auth } = useAuth()
   const userService = useUserAPI()
+
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -25,11 +27,22 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
     userService
       .updateUserProfile({ ...data, id: auth.id })
       .then((_) => {
-        toast.success('Profile updated!')
+        if (data.profileImage.length > 0) {
+          userService
+            .updateUserProfileImage(auth.id, data.profileImage[0])
+            .then((_) => {
+              toast.success('Profile updated.')
+            })
+            .catch((_) => {
+              toast.error('Profile image not updated.')
+            })
+        } else {
+          toast.success('Profile updated.')
+        }
       })
       .catch((error) => {
         if (!error?.response) {
-          toast.error('No response from server!')
+          toast.error('No response from server.')
         } else if (error.response?.status == 400) {
           toast.error('Something went wrong. Please try again.')
         } else if (error.response?.status == 401) {
@@ -39,6 +52,27 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
         }
       })
   }
+
+  useEffect(() => {
+    userService
+      .getUserById(auth.id)
+      .then((res) => {
+        reset({
+          address: res.data.address,
+          bio: res.data.bio,
+          city: res.data.city,
+          firstName: res.data.firstName,
+          lastName: res.data.lastName,
+          phone: res.data.phone,
+          email: res.data.email,
+          profession: res.data.profession,
+          yearsOfExperience: res.data.yearsOfExperience,
+        })
+      })
+      .catch((_) => {
+        toast.error('Could not fetch user details.')
+      })
+  }, [])
 
   return (
     <form
@@ -59,9 +93,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('firstName')}
-              value='Donald'
-              type='text'
-              name='firstName'
               placeholder='First name'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -80,9 +111,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('lastName')}
-              value='Pump'
-              type='text'
-              name='lastName'
               placeholder='Last name'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -101,9 +129,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('profession')}
-              value='Professional dictator'
-              type='text'
-              name='profession'
               placeholder='Profession'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -122,15 +147,12 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('yearsOfExperience', { valueAsNumber: true })}
-              value={3}
-              type='text'
-              name='experience'
               placeholder='Years of experience'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
             {errors.yearsOfExperience && (
               <p className='text-sm text-red-600 font-medium mt-2'>
-                Please enter a valid number.
+                {errors.yearsOfExperience.message}
               </p>
             )}
           </div>
@@ -143,9 +165,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('email')}
-              value='d.pump@gamil.com'
               type='text'
-              name='email'
               placeholder='Email'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -155,7 +175,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
               </p>
             )}
           </div>
-          <div className='mb-4'>
+          {/* <div className='mb-4'>
             <label
               htmlFor='password'
               className='block text-gray-700 text-sm font-bold mb-2'
@@ -164,8 +184,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('password')}
-              value='123sddasdASD@'
-              name='password'
               type='password'
               placeholder='*************'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -176,7 +194,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
                 number, 1 symbol and be at least 8 characters long.
               </p>
             )}
-          </div>
+          </div> */}
           <div className='mb-4'>
             <label
               htmlFor='phone'
@@ -186,9 +204,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('phone')}
-              value='+31616022126'
-              type='text'
-              name='phone'
               placeholder='Phone'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -209,9 +224,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('address')}
-              value='Kruisakker 60A'
-              type='text'
-              name='address'
               placeholder='Address'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -230,9 +242,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <input
               {...register('city')}
-              value='Eindhoven'
-              type='text'
-              name='city'
               placeholder='City'
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
@@ -244,68 +253,23 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
           </div>
           <div className='mb-4'>
             <label
-              htmlFor='website'
-              className='block text-gray-700 text-sm font-bold mb-2'
-            >
-              Website (optional):
-            </label>
-            <input
-              {...register('website')}
-              value='www.donaldpump.com'
-              type='text'
-              name='website'
-              placeholder='Website'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            />
-            {errors.website && (
-              <p className='text-sm text-red-600 font-medium mt-2'>
-                Please enter a valid url.
-              </p>
-            )}
-          </div>
-          <div className='mb-4'>
-            <label
               htmlFor='photo'
               className='block text-gray-700 text-sm font-bold mb-2'
             >
               Profile photo:
             </label>
             <input
-              {...register('photo')}
+              {...register('profileImage')}
               type='file'
-              name='photo'
               className='block w-full text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4 file:rounded-md
       file:border-0 file:text-sm file:font-semibold
       file:bg-slate-50 file:text-slate-700
       hover:file:bg-slate-100'
             />
-            {errors.photo && (
+            {errors.profileImage && (
               <p className='text-sm text-red-600 font-medium mt-2'>
-                File is not valid.
-              </p>
-            )}
-          </div>
-          <div className='mb-4'>
-            <label
-              htmlFor='cv'
-              className='block text-gray-700 text-sm font-bold mb-2'
-            >
-              CV:
-            </label>
-            <input
-              {...register('cv')}
-              type='file'
-              name='cv'
-              className='block w-full text-sm text-slate-500
-      file:mr-4 file:py-2 file:px-4 file:rounded-md
-      file:border-0 file:text-sm file:font-semibold
-      file:bg-slate-50 file:text-slate-700
-      hover:file:bg-slate-100'
-            />
-            {errors.cv && (
-              <p className='text-sm text-red-600 font-medium mt-2'>
-                File is not valid.
+                {errors.profileImage.message as String}
               </p>
             )}
           </div>
@@ -318,8 +282,6 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             </label>
             <textarea
               {...register('bio')}
-              value='Greatest description ever.'
-              name='bio'
               placeholder='Bio'
               rows={5}
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'

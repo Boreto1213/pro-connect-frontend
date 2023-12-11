@@ -4,6 +4,9 @@ export type Auth = {
   accessToken: string
   refreshToken: string
   id: number
+  firstName: string
+  lastName: string
+  profileImageUrl: string
   role: string
 }
 

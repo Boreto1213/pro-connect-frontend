@@ -45,13 +45,15 @@ const Profile: FC<ProfileProps> = ({}) => {
     <div className='w-full flex flex-col mt-10'>
       <div className='relative z-10 flex justify-between items-center gradient'>
         <div className='flex items-end gap-2'>
-          <img
-            src={donaldTrump}
-            alt='X-user profile picture'
-            className='w-40 h-40 rounded-full'
-          />
+          <div id={"test"} className='w-11 h-11 rounded-full overflow-hidden bg-rose-400'>
+            {/* <img
+                src={auth.profileImageUrl}
+                alt='Your profile picture'
+                className='w-11 h-11 object-cover'
+              /> */}
+          </div>
           <div className='flex flex-col w-full mb-3'>
-            <p className='text-3xl font-semibold text-slate-700'>Donald Pump</p>
+            <p className='text-3xl font-semibold text-slate-700'>{`${auth.firstName} ${auth.lastName}`}</p>
             <p className='text-xl font-semibold text-teal-400'>
               Professional dictator
             </p>

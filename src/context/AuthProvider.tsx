@@ -1,12 +1,15 @@
-import {
-  ReactNode,
-  createContext,
-  useState,
-  FC,
-} from 'react'
+import { ReactNode, createContext, useState, FC } from 'react'
 import { Auth, AuthContextType } from '../types/auth'
 
-const defaultAuthValue: Auth = { accessToken: '', refreshToken: '', id: 0, role: '' }
+const defaultAuthValue: Auth = {
+  accessToken: '',
+  refreshToken: '',
+  id: 0,
+  firstName: '',
+  lastName: '',
+  profileImageUrl: '',
+  role: '',
+}
 
 export const AuthContext = createContext<AuthContextType>({
   auth: defaultAuthValue,
