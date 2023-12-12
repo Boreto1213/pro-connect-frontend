@@ -9,12 +9,14 @@ import EditProfileFormData, {
 import useAuth from '../../../hooks/useAuth'
 import useUserAPI from '../../../hooks/api/useUserAPI'
 import { toast } from 'sonner'
+import { useUserDetails } from '../../../hooks/useUserDetails'
 
 interface EditProfileProps {}
 
 const EditProfile: FC<EditProfileProps> = ({}) => {
   const { auth } = useAuth()
   const userService = useUserAPI()
+  const { setUpdated } = useUserDetails()
 
   const {
     reset,
@@ -32,12 +34,14 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             .updateUserProfileImage(auth.id, data.profileImage[0])
             .then((_) => {
               toast.success('Profile updated.')
+              setUpdated((prev) => !prev)
             })
             .catch((_) => {
               toast.error('Profile image not updated.')
             })
         } else {
           toast.success('Profile updated.')
+          setUpdated((prev) => !prev)
         }
       })
       .catch((error) => {
@@ -288,7 +292,7 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             />
             {errors.bio && (
               <p className='text-sm text-red-600 font-medium mt-2'>
-                Please enter a valid bio.
+                { errors.bio.message }
               </p>
             )}
           </div>

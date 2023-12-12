@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export interface User {
   id: number
   email: string
@@ -32,4 +34,11 @@ export interface UpdateUserRequest {
   bio?: string
   profession?: string
   yearsOfExperience?: number
+}
+
+export interface UserDetailsContextType {
+  user?: Expert
+  setUser: Dispatch<SetStateAction<Expert | undefined>>
+  updated: boolean
+  setUpdated: Dispatch<SetStateAction<boolean>>
 }

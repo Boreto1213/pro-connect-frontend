@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Icons } from '../../Icons'
 import {
@@ -11,17 +11,21 @@ import { toast } from 'sonner'
 import useUserAPI from '../../../hooks/api/useUserAPI'
 import useAuth from '../../../hooks/useAuth'
 import { AxiosError } from 'axios'
+import { useUserDetails } from '../../../hooks/useUserDetails'
 
 interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = ({}) => {
-  const { auth } = useAuth()
+  const { auth: { id } } = useAuth()
+  const { user, setUser, updated } = useUserDetails()
   const userService = useUserAPI()
   const navigate = useNavigate()
+  console.log("User :", user);
+  
 
   const onClick = () => {
     userService
-      .deleteUserProfile(auth.id)
+      .deleteUserProfile(id)
       .then((_) => {
         toast.success('Profile deleted!')
         // Also logout and erase the auth context
@@ -40,21 +44,49 @@ const Profile: FC<ProfileProps> = ({}) => {
       })
   }
 
+  useEffect(() => {
+    userService
+      .getUserById(id)
+      .then((res) => {
+        console.log("Response: ", res.data);
+        
+        setUser({
+          address: res.data.address,
+          bio: res.data.bio,
+          city: res.data.city,
+          firstName: res.data.firstName,
+          lastName: res.data.lastName,
+          phone: res.data.phone,
+          email: res.data.email,
+          profession: res.data.profession,
+          yearsOfExperience: res.data.yearsOfExperience,
+          dislikes: res.data.dislikes,
+          likes: res.data.likes,
+          id: res.data.id,
+          profileImageUrl: res.data.profileImageUrl,
+          password: res.data.password
+        })
+      })
+      .catch((_) => {
+        toast.error('Could not fetch user details.')
+      })
+  }, [updated])
+
   return (
     <div className='w-full flex flex-col mt-10'>
       <div className='relative z-10 flex justify-between items-center gradient'>
         <div className='flex items-end gap-2'>
           <div className='w-40 h-40 flex-shrink-0 rounded-full overflow-hidden'>
             <img
-                src={auth.profileImageUrl}
+                src={user?.profileImageUrl}
                 alt='Your profile picture'
                 className='w-40 h-40 object-cover'
               />
           </div>
           <div className='inline-flex flex-col w-full mb-3 '>
-            <p className='text-3xl font-semibold text-slate-700'>{`${auth.firstName} ${auth.lastName}`}</p>
+            <p className='text-3xl font-semibold text-slate-700'>{`${user?.firstName} ${user?.lastName}`}</p>
             <p className='text-xl font-semibold text-teal-400'>
-              Professional dictator
+              { user?.profession}
             </p>
           </div>
         </div>
