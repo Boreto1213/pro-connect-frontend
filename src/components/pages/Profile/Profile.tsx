@@ -12,6 +12,7 @@ import useUserAPI from '../../../hooks/api/useUserAPI'
 import useAuth from '../../../hooks/useAuth'
 import { AxiosError } from 'axios'
 import { useUserDetails } from '../../../hooks/useUserDetails'
+import ProfileImage from '../../ui/ProfileImage'
 
 interface ProfileProps {}
 
@@ -20,7 +21,6 @@ const Profile: FC<ProfileProps> = ({}) => {
   const { user, setUser, updated } = useUserDetails()
   const userService = useUserAPI()
   const navigate = useNavigate()
-  console.log("User :", user);
   
 
   const onClick = () => {
@@ -48,8 +48,6 @@ const Profile: FC<ProfileProps> = ({}) => {
     userService
       .getUserById(id)
       .then((res) => {
-        console.log("Response: ", res.data);
-        
         setUser({
           address: res.data.address,
           bio: res.data.bio,
@@ -76,13 +74,7 @@ const Profile: FC<ProfileProps> = ({}) => {
     <div className='w-full flex flex-col mt-10'>
       <div className='relative z-10 flex justify-between items-center gradient'>
         <div className='flex items-end gap-2'>
-          <div className='w-40 h-40 flex-shrink-0 rounded-full overflow-hidden'>
-            <img
-                src={user?.profileImageUrl}
-                alt='Your profile picture'
-                className='w-40 h-40 object-cover'
-              />
-          </div>
+          <ProfileImage size='xxl' imageUrl={user?.profileImageUrl} />
           <div className='inline-flex flex-col w-full mb-3 '>
             <p className='text-3xl font-semibold text-slate-700'>{`${user?.firstName} ${user?.lastName}`}</p>
             <p className='text-xl font-semibold text-teal-400'>

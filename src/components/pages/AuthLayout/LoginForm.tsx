@@ -76,7 +76,6 @@ const LoginForm: FC = ({}) => {
           <input
             {...register('email')}
             type='text'
-            name='email'
             placeholder='Email'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
@@ -95,12 +94,11 @@ const LoginForm: FC = ({}) => {
           </label>
           <input
             {...register('password')}
-            name='password'
             type='password'
             placeholder='*************'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.password && (
             <p className='text-sm text-red-600 font-medium mt-2'>
               Password must contain at least 1 lowercase, 1 uppercase, 1 number,
               1 symbol and be at least 8 characters long.

@@ -17,6 +17,10 @@ export const useServiceAPI = () => {
     return axiosPrivate.get<GetServiceResponse>(`/services?page=${page}`)
   }
 
+  const getAllTags = () => {
+    return axiosPrivate.get('/services/tags')
+  }
+
   const getServicesFilterCriteriaAndPage = (
     page: number,
     titleQuery: string,
@@ -28,5 +32,5 @@ export const useServiceAPI = () => {
     )
   }
 
-  return { createService, getServicesByPage, getServicesFilterCriteriaAndPage, getServiceById }
+  return { createService, getServicesByPage, getServicesFilterCriteriaAndPage, getServiceById, getAllTags }
 }

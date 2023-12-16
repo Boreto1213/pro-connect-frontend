@@ -3,8 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Button from '../../ui/Button'
 import { Link } from 'react-router-dom'
-import EditProfileFormData, {
-  schema,
+import {
+  editExpertFormSchema,
+  EditExpertProfileFormData,
 } from '../../../types/user/edit-profile-form-data'
 import useAuth from '../../../hooks/useAuth'
 import useUserAPI from '../../../hooks/api/useUserAPI'
@@ -13,7 +14,7 @@ import { useUserDetails } from '../../../hooks/useUserDetails'
 
 interface EditProfileProps {}
 
-const EditProfile: FC<EditProfileProps> = ({}) => {
+const EditExpertProfileForm: FC<EditProfileProps> = ({}) => {
   const { auth } = useAuth()
   const userService = useUserAPI()
   const { setUpdated } = useUserDetails()
@@ -23,9 +24,11 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<EditProfileFormData>({ resolver: zodResolver(schema) })
+  } = useForm<EditExpertProfileFormData>({
+    resolver: zodResolver(editExpertFormSchema),
+  })
 
-  const onSubmit = (data: EditProfileFormData) => {
+  const onSubmit = (data: EditExpertProfileFormData) => {
     userService
       .updateUserProfile({ ...data, id: auth.id })
       .then((_) => {
@@ -287,12 +290,12 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
             <textarea
               {...register('bio')}
               placeholder='Bio'
-              rows={5}
+              rows={9}
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
             {errors.bio && (
               <p className='text-sm text-red-600 font-medium mt-2'>
-                { errors.bio.message }
+                {errors.bio.message}
               </p>
             )}
           </div>
@@ -308,4 +311,4 @@ const EditProfile: FC<EditProfileProps> = ({}) => {
   )
 }
 
-export default EditProfile
+export default EditExpertProfileForm

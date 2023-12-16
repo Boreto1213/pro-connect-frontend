@@ -10,6 +10,7 @@ import { useReviewAPI } from '../../../hooks/api/useReviewAPI'
 import useAuth from '../../../hooks/useAuth'
 import { useGetQueryParam } from '../../../hooks/useGetQueryParam'
 import { toast } from 'sonner'
+import { useUserDetails } from '../../../hooks/useUserDetails'
 
 const schema = z.object({
   review: z
@@ -42,6 +43,7 @@ const AddReviewForm: FC<AddReviewFormProps> = ({ setReviews }) => {
   const {
     auth: { id },
   } = useAuth()
+  const { user } = useUserDetails()
   const getQueryParam = useGetQueryParam()
   const serviceId = getQueryParam('selectedServiceId')
 
@@ -54,11 +56,23 @@ const AddReviewForm: FC<AddReviewFormProps> = ({ setReviews }) => {
       rating: rating,
       text: data.review.trim(),
     }
-    // const optimisticReviewUpdate: Review = {
-    //   id: 0,
-    //   createdBy: 
-    //   createdAt: new Date()
-    // }
+    const optimisticReviewUpdate: Review = {
+      id: 0,
+      createdBy: user!,
+      createdAt: new Date(),
+      rating: rating,
+      service: {
+        description: '',
+        expert: user!,
+        price: 0,
+        id: Number(serviceId),
+        tags: [],
+        title: '',
+      },
+      text: data.review.trim(),
+    }
+
+    setReviews((prev) => [optimisticReviewUpdate, ...prev])
 
     createReview(request)
       .then((_) => {

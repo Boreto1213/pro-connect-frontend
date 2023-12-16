@@ -49,7 +49,6 @@ const ExploreServices: FC<ExploreServicesProps> = ({}) => {
   }, [currentPage, setData])
 
 
-
   return (
     <div className='flex flex-col px-8 py-6 justify-center'>
       <div className='grid grid-cols-10 w-full gap-0'>

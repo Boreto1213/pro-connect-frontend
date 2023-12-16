@@ -1,9 +1,10 @@
 import { Service } from "./service/service"
+import { Expert } from "./user/user"
 
 export type Review = {
   id: number
   text: string
-  createdBy: Client
+  createdBy: Expert
   service: Service
   createdAt: Date
   rating: number

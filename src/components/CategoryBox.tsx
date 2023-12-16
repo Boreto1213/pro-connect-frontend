@@ -19,7 +19,6 @@ const CategoryBox: FC<CategoryBoxProps> = ({
       if (prev.find((c) => c.id === category.id)) {
         return prev.filter((c) => c.id !== category.id)
       }
-
       return [...prev, category]
     })
   }

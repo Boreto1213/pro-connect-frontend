@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Category } from './category'
+import { Expert } from '../user/user'
 
 export type Service = {
   id: number
@@ -32,4 +33,9 @@ type ServiceFilterType = {
 export type ServiceContextType = {
   data: ServiceContextValuesType
   setData: Dispatch<SetStateAction<ServiceContextValuesType>>
+}
+
+export type Tag = {
+  text: string
+  id: number
 }

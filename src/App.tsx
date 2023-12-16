@@ -8,7 +8,7 @@ import DashboardLayout from './components/pages/DashboardLayout/DashboardLayout'
 import Home from './components/pages/Home/Home'
 import Profile from './components/pages/Profile/Profile'
 import ProfileInfo from './components/pages/Profile/ProfileInfo'
-import EditProfile from './components/pages/Profile/EditProfile'
+import EditExpertProfileForm from './components/pages/Profile/EditExpertProfileForm'
 import Unauthorized from './components/pages/Unauthorized/Unauthorized'
 import NotFound from './components/pages/NotFound/NotFound'
 import RequireAuth from './components/RequireAuth'
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
             element: <Profile />,
             children: [
               { index: true, element: <ProfileInfo /> },
-              { path: 'edit', element: <EditProfile /> },
+              { path: 'edit', element: <EditExpertProfileForm /> },
             ],
           },
         ],
@@ -53,9 +53,9 @@ const router = createBrowserRouter([
       {
         element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
         children: [
-          {path: 'services', element: <ExploreServices />},
-          {path: 'services/create', element: <CreateService />}
-        ]
+          { path: 'services', element: <ExploreServices /> },
+          { path: 'services/create', element: <CreateService /> },
+        ],
       },
       { path: 'unauthorized', element: <Unauthorized /> },
     ],

@@ -4,6 +4,7 @@ import { Badge, Input, Tooltip } from '@nextui-org/react'
 import donaldTrump from '../../../assets/trump-circle.png'
 import { Link } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
+import ProfileImage from '../../ui/ProfileImage'
 
 interface TopBarProps {}
 
@@ -41,13 +42,8 @@ const TopBar: FC<TopBarProps> = ({}) => {
 
         <Link to='/dashboard/profile'>
           <div className='flex justify-center items-center gap-2 ml-4'>
-            <div className='w-11 h-11 rounded-full overflow-hidden'>
-              <img
-                src={auth.profileImageUrl}
-                alt='Your profile picture'
-                className='w-11 h-11 object-cover'
-              />
-            </div>
+            <ProfileImage size='md' imageUrl={auth.profileImageUrl} />
+
             <h4 className='text-md font-semibold text-slate-800 whitespace-nowrap'>
               {`${auth.firstName} ${auth.lastName}`}
             </h4>
