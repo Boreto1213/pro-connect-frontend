@@ -10,7 +10,7 @@ const DashboardLayout: FC = () => {
     { id: 1, name: 'Home', href: '/dashboard/home', icon: 'Home' },
     { id: 4, name: 'Chats', href: '/chats', icon: 'MessageCircle' },
     { id: 2, name: 'Explore services', href: '/dashboard/services?page=1&popupOpen=false&seeReviews=false&selectedServiceId=', icon: 'Lightbulb' },
-    { id: 3, name: 'Explore experts', href: '/experts', icon: 'Users' },
+    { id: 3, name: 'Explore experts', href: '/dashboard/experts', icon: 'Users' },
     {
       id: 5,
       name: 'Create new service',
