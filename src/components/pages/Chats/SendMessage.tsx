@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react'
+import { FC, useRef, KeyboardEvent } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 import { Icons } from '../../Icons'
 import { toast } from 'sonner'
@@ -19,9 +19,17 @@ const SendMessage: FC<SendMessageProps> = ({ onSend }) => {
     }
   }
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key == 'Enter') {
+      event.preventDefault()
+      onClick()
+    }
+  }
+
   return (
     <div className='flex items-end gap-2 px-4 py-2'>
       <ReactTextareaAutosize
+        onKeyDown={onKeyDown}
         ref={textAreaRef}
         maxRows={8}
         rows={3}

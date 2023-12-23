@@ -6,9 +6,6 @@ interface ChatsProps {}
 
 const Chats: FC<ChatsProps> = ({}) => {
 
-
-  
-
   return (
     <div className='grid grid-cols-10 height-screen-minus-180px'>
       <ChatSideBar />

@@ -1,3 +1,4 @@
+import { GetChatsResponse } from '../../types/chat'
 import { Expert, UpdateUserRequest } from '../../types/user/user'
 import useAxiosPrivate from './useAxiosPrivate'
 
@@ -28,7 +29,11 @@ const useUserAPI = () => {
     return axiosPrivate.delete(`${apiPath}/${userId}`)
   }
 
-  return { getUserById ,updateUserProfile, deleteUserProfile, updateUserProfileImage }
+  const getChats = (userId: number) => {
+    return axiosPrivate.get<GetChatsResponse>(`/messages/chats?userId=${userId}`)
+  } 
+
+  return { getUserById ,updateUserProfile, deleteUserProfile, updateUserProfileImage, getChats }
 }
 
 export default useUserAPI

@@ -118,7 +118,7 @@ const RegisterForm: FC = () => {
             placeholder='First name'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.firstName && (
             <p className='text-sm text-red-600 font-medium mt-2'>
               Please enter a valid first name.
             </p>
@@ -138,7 +138,7 @@ const RegisterForm: FC = () => {
             placeholder='Last name'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.lastName && (
             <p className='text-sm text-red-600 font-medium mt-2'>
               Please enter a valid last name.
             </p>
@@ -178,7 +178,7 @@ const RegisterForm: FC = () => {
             placeholder='*************'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.password && (
             <p className='text-sm text-red-600 font-medium mt-2'>
               Password must contain at least 1 lowercase, 1 uppercase, 1 number,
               1 symbol and be at least 8 characters long.
@@ -199,7 +199,7 @@ const RegisterForm: FC = () => {
             placeholder='Phone'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.phone && (
             <p className='text-sm text-red-600 font-medium mt-2'>
               Please enter a valid phone number.
             </p>
@@ -219,9 +219,9 @@ const RegisterForm: FC = () => {
             placeholder='Address'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.address && (
             <p className='text-sm text-red-600 font-medium mt-2'>
-              Please enter a valid addres.
+              Please enter a valid address.
             </p>
           )}
         </div>
@@ -239,7 +239,7 @@ const RegisterForm: FC = () => {
             placeholder='City'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
-          {errors.email && (
+          {errors.city && (
             <p className='text-sm text-red-600 font-medium mt-2'>
               Please enter a valid city.
             </p>
@@ -248,7 +248,7 @@ const RegisterForm: FC = () => {
         <div className='flex justify-between flex-col sm:flex-row'>
           <Button type='submit'>Register</Button>
           <Link to='/auth/login'>
-            <Button variant='ghost'>Alredy have an account?</Button>
+            <Button variant='ghost'>Already have an account?</Button>
           </Link>
         </div>
       </form>
