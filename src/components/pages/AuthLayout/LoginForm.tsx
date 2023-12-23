@@ -40,7 +40,7 @@ const LoginForm: FC = ({}) => {
         setAuth({
           accessToken: data.accessToken,
           refreshToken: data.refreshToken,
-          id: getPayloadData(data.accessToken, 'sub'),
+          id: Number(getPayloadData(data.accessToken, 'sub')),
           firstName: data.firstName,
           lastName: data.lastName,
           profileImageUrl: data.profileImageUrl,

@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom'
 const DashboardLayout: FC = () => {
   const sidebarOptions: SideBarOption[] = [
     { id: 1, name: 'Home', href: '/dashboard/home', icon: 'Home' },
-    { id: 4, name: 'Chats', href: '/chats', icon: 'MessageCircle' },
+    { id: 4, name: 'Chats', href: '/dashboard/chats', icon: 'MessageCircle' },
     { id: 2, name: 'Explore services', href: '/dashboard/services?page=1&popupOpen=false&seeReviews=false&selectedServiceId=', icon: 'Lightbulb' },
     { id: 3, name: 'Explore experts', href: '/dashboard/experts', icon: 'Users' },
     {
@@ -27,7 +27,7 @@ const DashboardLayout: FC = () => {
       <TopBar />
       <div className='relative'>
         <SidebarOptions sidebarOptions={sidebarOptions} />
-        <div className='inline-flex flex-col h-full w-full pl-[320px] pr-20 pb-20'>
+        <div className='inline-flex flex-col h-full w-full pl-[320px] pr-20'>
           <Outlet />
         </div>
         <Footer />

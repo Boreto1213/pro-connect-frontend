@@ -6,6 +6,10 @@ html {
   font-family: 'Onest', sans-serif;
 }
 
+.height-screen-minus-180px {
+  height: calc(100vh - 180px);
+}
+
 .heading-stroke { 
   color: white;
   -webkit-text-stroke: 4px rgb(15 118 110);

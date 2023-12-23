@@ -32,7 +32,9 @@ import {
   FileEdit,
   DollarSign,
   PartyPopper,
-  Mail
+  Mail,
+  MoreHorizontal,
+  SendHorizonal
 } from 'lucide-react'
 
 export const Icons = {
@@ -515,7 +517,9 @@ export const Icons = {
   FileEdit,
   DollarSign,
   PartyPopper,
-  Mail
+  Mail,
+  MoreHorizontal,
+  SendHorizonal
 }
 
 export type Icon = keyof typeof Icons

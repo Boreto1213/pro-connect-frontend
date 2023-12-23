@@ -16,8 +16,7 @@ const Home: FC<HomeProps> = ({}) => {
   ]
   return (
     <div
-      id='dashboard-content'
-      className='w-full h-full flex flex-col justify-start gap-16 mt-10'
+      className='w-full h-full flex flex-col justify-start gap-16 mt-10 pb-20'
     >
       <div className='flex flex-col gap-10'>
         <h1 className='text-8xl text-slate-700  welcome-heading whitespace-nowrap'>
