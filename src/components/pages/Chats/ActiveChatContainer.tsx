@@ -7,18 +7,13 @@ import { Client, IMessage } from '@stomp/stompjs'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'sonner'
 import MessageRow from './MessageRow'
+import { ChatOptionType } from '../../../types/chat'
 
-interface ActiveChatContainerProps {}
+interface ActiveChatContainerProps {
+  data: ChatOptionType | undefined
+}
 
-// const messages: Message[] = [
-//   { id: 7, senderId: 10, receiverId: 9, text: 'Ops' },
-//   { id: 1, senderId: 10, receiverId: 9, text: 'Hello mate' },
-//   { id: 2, senderId: 10, receiverId: 9, text: 'Hows life going?' },
-//   { id: 3, senderId: 9, receiverId: 10, text: 'Great' },
-//   { id: 4, senderId: 9, receiverId: 10, text: 'what about you?' },
-// ]
-
-const ActiveChatContainer: FC<ActiveChatContainerProps> = ({}) => {
+const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
   const {
     auth: { id },
   } = useAuth()
@@ -84,7 +79,7 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({}) => {
 
   return (
     <div className='flex flex-col col-span-7 border-r-1 border-gray-200 h-full'>
-      <ActiveChatTopBar />
+      <ActiveChatTopBar profileImageUrl={data?.recipientProfileImageUrl} recipientName={data?.recipientName} />
       <div className='flex flex-col justify-end gap-0.5 flex-grow px-4 py-2'>
         <div className='flex justify-center text-gray-400 text-sm font-semibold'>
           Start of chat: 22.12.2023

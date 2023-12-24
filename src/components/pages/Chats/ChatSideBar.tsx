@@ -7,24 +7,14 @@ import { ChatOptionType } from '../../../types/chat'
 import useAuth from '../../../hooks/useAuth'
 import { toast } from 'sonner'
 
-interface ChatSideBarProps {}
+interface ChatSideBarProps {
+  chatOptions: ChatOptionType[]
+}
 
-const ChatSideBar: FC<ChatSideBarProps> = ({}) => {
-  const {
-    auth: { id },
-  } = useAuth()
-  const [chatOptions, setChatOptions] = useState<ChatOptionType[]>([])
-  const { getChats } = useUserAPI()
+const ChatSideBar: FC<ChatSideBarProps> = ({ chatOptions}) => {
 
-  useEffect(() => {
-    getChats(id)
-      .then((res) => {
-        setChatOptions(res.data.chats)
-      })
-      .catch((_) => {
-        toast.error('Something went wrong.')
-      })
-  }, [])
+
+  
 
   return (
     <div className='col-span-3 px-4 py-2 h-full border-r-1 border-gray-200'>

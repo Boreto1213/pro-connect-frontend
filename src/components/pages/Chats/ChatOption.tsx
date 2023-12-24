@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import ProfileImage from '../../ui/ProfileImage'
 import { ChatOptionType } from '../../../types/chat'
+import { Link } from 'react-router-dom'
 
 interface ChatOptionProps {
   chatData: ChatOptionType
@@ -48,17 +49,19 @@ const ChatOption: FC<ChatOptionProps> = ({ chatData }) => {
   }
 
   return (
-    <div className='flex gap-1 items-center px-2 py-1 bg-gray-50 rounded-md hover:bg-gray-100'>
-      <ProfileImage size='md' imageUrl={chatData.recipientProfileImageUrl} />
-      <div className='flex flex-col'>
-        <span className='text-slate-700 font-semibold text-base'>
-          {chatData.recipientName}
-        </span>
-        <span className='text-slate-500 font-semibold text-xs'>
-          {shortenedLastMessage} · {dateToShow}
-        </span>
+    <Link to={`/dashboard/chats?recipientId=${chatData.recipientId}`}>
+      <div className='flex gap-1 items-center px-2 py-1 bg-gray-50 rounded-md hover:bg-gray-100'>
+        <ProfileImage size='md' imageUrl={chatData.recipientProfileImageUrl} />
+        <div className='flex flex-col'>
+          <span className='text-slate-700 font-semibold text-base'>
+            {chatData.recipientName}
+          </span>
+          <span className='text-slate-500 font-semibold text-xs'>
+            {shortenedLastMessage} · {dateToShow}
+          </span>
+        </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
