@@ -34,7 +34,8 @@ import {
   PartyPopper,
   Mail,
   MoreHorizontal,
-  SendHorizonal
+  SendHorizonal,
+  MessageCircleIcon
 } from 'lucide-react'
 
 export const Icons = {
@@ -519,7 +520,8 @@ export const Icons = {
   PartyPopper,
   Mail,
   MoreHorizontal,
-  SendHorizonal
+  SendHorizonal,
+  MessageCircleIcon
 }
 
 export type Icon = keyof typeof Icons

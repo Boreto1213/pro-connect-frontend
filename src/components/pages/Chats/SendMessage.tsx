@@ -11,7 +11,6 @@ interface SendMessageProps {
 const SendMessage: FC<SendMessageProps> = ({ onSend }) => {
   const getQueryParam = useGetQueryParam()
   const recipientId = getQueryParam('recipientId')
-  console.log(recipientId, !!recipientId);
   
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null)

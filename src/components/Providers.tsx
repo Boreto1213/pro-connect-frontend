@@ -5,6 +5,8 @@ import { NextUIProvider } from '@nextui-org/react'
 import AuthProvider from '../context/AuthProvider'
 import ServiceProvider from '../context/ServiceProvider'
 import UserDetailsProvider from '../context/UserDetailsProvider'
+import StompClientProvider from '../context/StompClientProvider'
+import MessagesProvider from '../context/MessagesProvider'
 
 interface ProvidersProps {
   children: ReactNode
@@ -16,11 +18,15 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <Toaster position='top-center' richColors />
 
       <AuthProvider>
-        <UserDetailsProvider>
-          <ServiceProvider>
-            <NextUIProvider>{children}</NextUIProvider>
-          </ServiceProvider>
-        </UserDetailsProvider>
+        <StompClientProvider>
+          <MessagesProvider>
+            <UserDetailsProvider>
+              <ServiceProvider>
+                <NextUIProvider>{children}</NextUIProvider>
+              </ServiceProvider>
+            </UserDetailsProvider>
+          </MessagesProvider>
+        </StompClientProvider>
       </AuthProvider>
     </>
   )

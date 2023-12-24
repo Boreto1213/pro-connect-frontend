@@ -14,6 +14,7 @@ interface UserDetailsProviderProps {
 }
 
 const UserDetailsProvider: FC<UserDetailsProviderProps> = ({ children }) => {
+  
   const [user, setUser] = useState<Expert | undefined>()
   const [updated, setUpdated] = useState<boolean>(false)
   
@@ -21,5 +22,5 @@ const UserDetailsProvider: FC<UserDetailsProviderProps> = ({ children }) => {
     {children}
   </UserDetailsContext.Provider>
 }
- 
+
 export default UserDetailsProvider

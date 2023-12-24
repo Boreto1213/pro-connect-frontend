@@ -35,7 +35,7 @@ const ChatSideBar: FC<ChatSideBarProps> = ({ chatOptions}) => {
       />
       <div className='flex flex-col gap-2 mt-2'>
         {chatOptions.length ? (
-          chatOptions.map((c) => <ChatOption chatData={c} />)
+          chatOptions.map((c) => <ChatOption key={c.recipientId} chatData={c} />)
         ) : (
           <p className='w-full text-center text-medium font-semibold text-slate-700'>
             No chats to show yet. :(

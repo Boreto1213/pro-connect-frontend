@@ -25,7 +25,11 @@ const router = createBrowserRouter([
   { path: '/', element: <Navigate to='/auth/login' /> },
   {
     path: '/auth',
-    element: <AuthLayout />,
+    element: (
+      <Providers>
+        <AuthLayout />
+      </Providers>
+    ),
     children: [
       { path: 'login', element: <LoginForm /> },
       { path: 'register', element: <RegisterForm /> },
@@ -33,7 +37,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: (
+      <Providers>
+        <DashboardLayout />
+      </Providers>
+    ),
     children: [
       {
         element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
@@ -74,11 +82,7 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return (
-    <Providers>
-      <RouterProvider router={router} />
-    </Providers>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
