@@ -77,6 +77,7 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
                 return openChat[i - 1]?.senderId === openChat[i].senderId
               }
 
+
               return (
                 <MessageRow
                   userId={id}
