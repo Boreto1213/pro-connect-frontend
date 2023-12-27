@@ -33,7 +33,7 @@ const ProfileImage: FC<ProfileImageProps> = ({ imageUrl, size }) => {
       ) : (
         <div
           className={cn(
-            'flex justify-center items-center rounded-full border-gray-300 bg-gray-100',
+            'flex justify-center flex-shrink-0 items-center rounded-full border-gray-300 bg-gray-100',
             {
               'w-7 h-7 border-1': size === 'sm',
               'w-11 h-11 border-2': size === 'md',
@@ -45,7 +45,7 @@ const ProfileImage: FC<ProfileImageProps> = ({ imageUrl, size }) => {
             className={cn('text-gray-600', {
               'w-4 h-4': size === 'sm',
               'w-7 h-7': size === 'md',
-              'w-20 h-20 flex-shrink-0': size === 'xxl',
+              'w-20 h-20': size === 'xxl',
             })}
           />
         </div>

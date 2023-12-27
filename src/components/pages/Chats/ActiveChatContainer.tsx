@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react'
+import { FC, useContext } from 'react'
 import useAuth from '../../../hooks/useAuth'
 import { Message } from '../../../types/message'
 import ActiveChatTopBar from './ActiveChatTopBar'
@@ -19,7 +19,6 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
   const {
     auth: { id },
   } = useAuth()
-  // const [messages, setMessages] = useState<Message[]>([])
   const { messages, setMessages} = useMessages()
   const getQueryParam = useGetQueryParam()
   const recipientId = getQueryParam('recipientId')
@@ -28,20 +27,20 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
   const sendMessage = (newMessage: string) => {
     if (stompClient && recipientId) {
       const message: Message = {
-        id: Number(uuidv4()),
+        id: uuidv4(),
         senderId: id,
         receiverId: Number(recipientId),
         text: newMessage,
+        timestamp: new Date()
       }
       stompClient.publish({
-        destination: `/user/${recipientId}/queue/inboxmessages`,
+        destination: `/direct-message`,
         body: JSON.stringify(message),
       })
       setMessages((prev) => ({
         ...prev,
         [message.receiverId]: [...(prev[message.receiverId] || []), message],
       }))
-      // setMessages((messagesReceived) => [...messagesReceived, message])
     } else {
       toast.error('Could not send a message.')
     }

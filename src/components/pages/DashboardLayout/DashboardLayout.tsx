@@ -12,7 +12,6 @@ import useAuth from '../../../hooks/useAuth'
 import { Icons } from '../../Icons'
 import { Message } from '../../../types/message'
 import { useMessages } from '../../../hooks/useMessages'
-import { useLocation } from 'react-router-dom'
 
 const DashboardLayout: FC = () => {
   const {
@@ -21,7 +20,6 @@ const DashboardLayout: FC = () => {
   const { setStompClient } = useStompClient()
   const { chatOptions } = useChatOptions()
   const { setMessages } = useMessages()
-  const location = useLocation()
 
   const sidebarOptions: SideBarOption[] = [
     { id: 1, name: 'Home', href: '/dashboard/home', icon: 'Home' },

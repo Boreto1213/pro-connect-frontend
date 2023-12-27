@@ -1,21 +1,14 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import ChatOption from './ChatOption'
 import { Icons } from '../../Icons'
 import { Input } from '@nextui-org/react'
-import useUserAPI from '../../../hooks/api/useUserAPI'
 import { ChatOptionType } from '../../../types/chat'
-import useAuth from '../../../hooks/useAuth'
-import { toast } from 'sonner'
 
 interface ChatSideBarProps {
   chatOptions: ChatOptionType[]
 }
 
 const ChatSideBar: FC<ChatSideBarProps> = ({ chatOptions}) => {
-
-
-  
-
   return (
     <div className='col-span-3 px-4 py-2 h-full border-r-1 border-gray-200'>
       <div className='flex justify-between items-center'>

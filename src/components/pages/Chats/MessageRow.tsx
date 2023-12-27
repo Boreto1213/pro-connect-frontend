@@ -10,11 +10,7 @@ interface MessageRowProps {
 }
 
 const MessageRow: FC<MessageRowProps> = ({message, userId, hasNextMessageFromSameUser, hasPrevMessageFromSameUser}) => {
-  
-  
   const isCurrentUser = message.senderId == userId
-
-              
 
   return <div
   key={message.id}
