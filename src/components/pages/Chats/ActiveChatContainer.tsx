@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import useAuth from '../../../hooks/useAuth'
 import { Message } from '../../../types/message'
 import ActiveChatTopBar from './ActiveChatTopBar'
@@ -10,6 +10,7 @@ import { ChatOptionType } from '../../../types/chat'
 import { stompClientContext } from '../../../context/StompClientProvider'
 import { useGetQueryParam } from '../../../hooks/useGetQueryParam'
 import { useMessages } from '../../../hooks/useMessages'
+import useUserAPI from '../../../hooks/api/useUserAPI'
 
 interface ActiveChatContainerProps {
   data: ChatOptionType | undefined
@@ -19,10 +20,12 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
   const {
     auth: { id },
   } = useAuth()
+  const { getChatHistory } = useUserAPI()
   const { messages, setMessages} = useMessages()
   const getQueryParam = useGetQueryParam()
   const recipientId = getQueryParam('recipientId')
   const { stompClient } = useContext(stompClientContext)
+  const openChat = recipientId && messages[recipientId] ? messages[recipientId] : []
 
   const sendMessage = (newMessage: string) => {
     if (stompClient && recipientId) {
@@ -46,6 +49,17 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
     }
   }
 
+  useEffect(() => {
+    getChatHistory(id, Number(recipientId)).then((res) => {
+      if (recipientId) {
+        setMessages((prev) => ({
+          ...prev,
+          [recipientId]: res.data
+        }))
+      }
+    })
+  }, [id, recipientId])
+
   return (
     <div className='flex flex-col col-span-7 border-r-1 border-gray-200 h-full'>
       <ActiveChatTopBar profileImageUrl={data?.recipientProfileImageUrl} recipientName={data?.recipientName} />
@@ -53,14 +67,14 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
         <div className='flex justify-center text-gray-400 text-sm font-semibold'>
           Start of chat: 22.12.2023
         </div>
-        {recipientId && (messages[recipientId] || []).length
-          ? messages[recipientId].map((m, i) => {
+        {openChat.length
+          ? openChat.map((m, i) => {
               const hasNextMessageFromSameUser = () => {
-                return messages[recipientId][i + 1]?.senderId === messages[recipientId][i].senderId
+                return openChat[i + 1]?.senderId === openChat[i].senderId
               }
 
               const hasPrevMessageFromSameUser = () => {
-                return messages[recipientId][i - 1]?.senderId === messages[recipientId][i].senderId
+                return openChat[i - 1]?.senderId === openChat[i].senderId
               }
 
               return (

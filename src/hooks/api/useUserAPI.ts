@@ -1,4 +1,5 @@
 import { GetChatsResponse } from '../../types/chat'
+import { Message } from '../../types/message'
 import { Expert, UpdateUserRequest } from '../../types/user/user'
 import useAxiosPrivate from './useAxiosPrivate'
 
@@ -33,7 +34,11 @@ const useUserAPI = () => {
     return axiosPrivate.get<GetChatsResponse>(`/messages/chats?userId=${userId}`)
   } 
 
-  return { getUserById ,updateUserProfile, deleteUserProfile, updateUserProfileImage, getChats }
+  const getChatHistory = (userId1: number, userId2: number) => {
+    return axiosPrivate.get<Message[]>(`/messages/chat-history?user1=${userId1}&user2=${userId2}`)
+  }
+
+  return { getUserById ,updateUserProfile, deleteUserProfile, updateUserProfileImage, getChats, getChatHistory }
 }
 
 export default useUserAPI
