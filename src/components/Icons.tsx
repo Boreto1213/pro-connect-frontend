@@ -35,7 +35,8 @@ import {
   Mail,
   MoreHorizontal,
   SendHorizonal,
-  MessageCircleIcon
+  MessageCircleIcon,
+  LogOut
 } from 'lucide-react'
 
 export const Icons = {
@@ -521,7 +522,8 @@ export const Icons = {
   Mail,
   MoreHorizontal,
   SendHorizonal,
-  MessageCircleIcon
+  MessageCircleIcon,
+  LogOut
 }
 
 export type Icon = keyof typeof Icons

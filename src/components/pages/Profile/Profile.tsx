@@ -17,13 +17,15 @@ import ProfileImage from '../../ui/ProfileImage'
 interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = ({}) => {
-  const { auth: { id } } = useAuth()
+  const {
+    auth: { id },
+    setAuth,
+  } = useAuth()
   const { user, setUser, updated } = useUserDetails()
   const userService = useUserAPI()
   const navigate = useNavigate()
-  
 
-  const onClick = () => {
+  const onTerminate = () => {
     userService
       .deleteUserProfile(id)
       .then((_) => {
@@ -44,6 +46,18 @@ const Profile: FC<ProfileProps> = ({}) => {
       })
   }
 
+  const onLogout = () => {
+    setAuth({
+      accessToken: '',
+      refreshToken: '',
+      id: 0,
+      firstName: '',
+      lastName: '',
+      profileImageUrl: '',
+      role: '',
+    })
+  }
+
   useEffect(() => {
     userService
       .getUserById(id)
@@ -62,7 +76,7 @@ const Profile: FC<ProfileProps> = ({}) => {
           likes: res.data.likes,
           id: res.data.id,
           profileImageUrl: res.data.profileImageUrl,
-          password: res.data.password
+          password: res.data.password,
         })
       })
       .catch((_) => {
@@ -78,7 +92,7 @@ const Profile: FC<ProfileProps> = ({}) => {
           <div className='inline-flex flex-col w-full mb-3 '>
             <p className='text-3xl font-semibold text-slate-700'>{`${user?.firstName} ${user?.lastName}`}</p>
             <p className='text-xl font-semibold text-teal-400'>
-              { user?.profession}
+              {user?.profession}
             </p>
           </div>
         </div>
@@ -93,18 +107,24 @@ const Profile: FC<ProfileProps> = ({}) => {
               <div className='flex flex-col py-0.5'>
                 <Link
                   to='edit'
-                  className='px-2 py-1.5 rounded-md hover:bg-gray-300'
+                  className='px-2 py-1.5 rounded-md hover:bg-gray-200'
                 >
                   Edit profile
                 </Link>
                 <Link
                   to='example'
-                  className='px-2 py-1.5 rounded-md hover:bg-gray-300'
+                  className='px-2 py-1.5 rounded-md hover:bg-gray-200 transition-colors'
                 >
                   Manage services
                 </Link>
-                <button onClick={onClick}>
-                  <span className='flex gap-1 px-2 py-1.5 rounded-md text-rose-500 hover:bg-rose-500 hover:text-white group'>
+                <button
+                  onClick={onLogout}
+                  className='px-2 py-1.5 rounded-md hover:bg-gray-200 text-start transition-colors'
+                >
+                  Logout
+                </button>
+                <button onClick={onTerminate}>
+                  <span className='flex gap-1 px-2 py-1.5 rounded-md text-rose-500 hover:bg-rose-500 hover:text-white group transition-colors'>
                     <Icons.Trash2 className='w-4 h-4 text-rose-500 group-hover:text-white' />{' '}
                     Terminate profile
                   </span>

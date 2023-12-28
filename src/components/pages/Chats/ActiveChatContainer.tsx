@@ -21,11 +21,12 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
     auth: { id },
   } = useAuth()
   const { getChatHistory } = useUserAPI()
-  const { messages, setMessages} = useMessages()
+  const { messages, setMessages } = useMessages()
   const getQueryParam = useGetQueryParam()
   const recipientId = getQueryParam('recipientId')
   const { stompClient } = useContext(stompClientContext)
-  const openChat = recipientId && messages[recipientId] ? messages[recipientId] : []
+  const openChat =
+    recipientId && messages[recipientId] ? messages[recipientId] : []
 
   const sendMessage = (newMessage: string) => {
     if (stompClient && recipientId) {
@@ -34,7 +35,7 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
         senderId: id,
         receiverId: Number(recipientId),
         text: newMessage,
-        timestamp: new Date()
+        timestamp: new Date(),
       }
       stompClient.publish({
         destination: `/direct-message`,
@@ -54,7 +55,7 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
       if (recipientId) {
         setMessages((prev) => ({
           ...prev,
-          [recipientId]: res.data
+          [recipientId]: res.data,
         }))
       }
     })
@@ -62,11 +63,19 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
 
   return (
     <div className='flex flex-col col-span-7 border-r-1 border-gray-200 h-full'>
-      <ActiveChatTopBar profileImageUrl={data?.recipientProfileImageUrl} recipientName={data?.recipientName} />
+      <ActiveChatTopBar
+        profileImageUrl={data?.recipientProfileImageUrl}
+        recipientName={data?.recipientName}
+      />
       <div className='flex flex-col justify-end gap-0.5 flex-grow px-4 py-2'>
-        <div className='flex justify-center text-gray-400 text-sm font-semibold'>
-          Start of chat: 22.12.2023
-        </div>
+        {openChat.length ? (
+          <div className='flex justify-center text-gray-400 text-sm font-semibold'>
+            Start of chat:{' '}
+            {`${new Date(openChat[0].timestamp).getDate()}.${
+              new Date(openChat[0].timestamp).getMonth() + 1
+            }.${new Date(openChat[0].timestamp).getFullYear()}`}
+          </div>
+        ) : null}
         {openChat.length
           ? openChat.map((m, i) => {
               const hasNextMessageFromSameUser = () => {
@@ -76,7 +85,6 @@ const ActiveChatContainer: FC<ActiveChatContainerProps> = ({ data }) => {
               const hasPrevMessageFromSameUser = () => {
                 return openChat[i - 1]?.senderId === openChat[i].senderId
               }
-
 
               return (
                 <MessageRow
