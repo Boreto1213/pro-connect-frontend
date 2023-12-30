@@ -7,27 +7,30 @@ import ServiceProvider from '../context/ServiceProvider'
 import UserDetailsProvider from '../context/UserDetailsProvider'
 import StompClientProvider from '../context/StompClientProvider'
 import MessagesProvider from '../context/MessagesProvider'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 interface ProvidersProps {
   children: ReactNode
 }
 
 const Providers: FC<ProvidersProps> = ({ children }) => {
+  const GOOGLE_CLIENT_ID = '581569922726-ahnbp29r6u40s5v2rtuid29g44dob83n.apps.googleusercontent.com'
   return (
     <>
       <Toaster position='top-center' richColors />
-
-      <AuthProvider>
-        <StompClientProvider>
-          <MessagesProvider>
-            <UserDetailsProvider>
-              <ServiceProvider>
-                <NextUIProvider>{children}</NextUIProvider>
-              </ServiceProvider>
-            </UserDetailsProvider>
-          </MessagesProvider>
-        </StompClientProvider>
-      </AuthProvider>
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <AuthProvider>
+          <StompClientProvider>
+            <MessagesProvider>
+              <UserDetailsProvider>
+                <ServiceProvider>
+                  <NextUIProvider>{children}</NextUIProvider>
+                </ServiceProvider>
+              </UserDetailsProvider>
+            </MessagesProvider>
+          </StompClientProvider>
+        </AuthProvider>
+      </GoogleOAuthProvider>
     </>
   )
 }

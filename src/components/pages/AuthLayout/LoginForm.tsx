@@ -9,6 +9,11 @@ import { AxiosError } from 'axios'
 import { getPayloadData } from '../../../lib/utils'
 import useAuth from '../../../hooks/useAuth'
 import useAuthAPI from '../../../hooks/api/useAuthAPI'
+import {
+  CodeResponse,
+  useGoogleLogin,
+} from '@react-oauth/google'
+import { LoginResponse } from '../../../types/login'
 
 const schema = z.object({
   email: z.string().email(),
@@ -33,28 +38,53 @@ const LoginForm: FC = ({}) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) })
   const authService = useAuthAPI()
 
+  const login = useGoogleLogin({
+    onSuccess: async (codeResponse: CodeResponse) => {
+      authService
+        .googleLogin(codeResponse.code)
+        .then((res) => setAuthOnLogin(res))
+        .catch((error: AxiosError) => {
+          if (!error.response) {
+            toast.error('No server response.')
+          } else if (error.status === 401) {
+            toast.error('Unauthorized.')
+          } else if (error.status === 404) {
+            toast.error('Please register before signing in with google.')
+          } else if (error.status === 400) {
+            toast.error('Could not authenticate with google')
+          } else {
+            toast.error('Something went wrong. Please try again.')
+          }
+        })
+    },
+    flow: 'auth-code',
+    redirect_uri: 'http://localhost:8080/auth/oauth2/callback',
+  })
+
   const onSubmit = (formData: FormData) => {
     authService
       .login(formData)
-      .then((data) => {
-        setAuth({
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-          id: Number(getPayloadData(data.accessToken, 'sub')),
-          firstName: data.firstName,
-          lastName: data.lastName,
-          profileImageUrl: data.profileImageUrl,
-          role: getPayloadData(data.accessToken, 'role'),
-        })
-        navigate(from, { replace: true })
-      })
-      .catch((error: AxiosError) => {
-        if (!error?.response) {
+      .then((res) => setAuthOnLogin(res))
+      .catch((err: AxiosError) => {
+        if (!err?.response) {
           toast.error('No server response. Please try again.')
-        } else if (error.response.status === 401) {
+        } else if (err.response.status === 401) {
           toast.error('Invalid login credentials.')
         }
       })
+  }
+
+  const setAuthOnLogin = (res: LoginResponse) => {
+    navigate(from, { replace: true })
+    setAuth({
+      accessToken: res.accessToken,
+      refreshToken: res.refreshToken,
+      id: Number(getPayloadData(res.accessToken, 'sub')),
+      firstName: res.firstName,
+      lastName: res.lastName,
+      profileImageUrl: res.profileImageUrl,
+      role: getPayloadData(res.accessToken, 'role'),
+    })
   }
 
   return (
@@ -120,7 +150,12 @@ const LoginForm: FC = ({}) => {
         <h4 className='w-full flex justify-center text-xl font-semibold my-3'>
           Sign in with:
         </h4>
-        <Button variant='slate' size='lg' className='w-full'>
+        <Button
+          onClick={() => login()}
+          variant='slate'
+          size='lg'
+          className='w-full'
+        >
           <svg
             width='30px'
             height='30px'

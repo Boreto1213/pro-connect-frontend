@@ -1,5 +1,6 @@
 import axios from '../../api/axios'
 import { LoginRequest, LoginResponse } from '../../types/login'
+import { User } from '../../types/user/user'
 
 const useAuthAPI = () => {
   const register = (user: Omit<User, 'id'>) => {
@@ -10,7 +11,11 @@ const useAuthAPI = () => {
     return axios.post<LoginResponse>('/auth/authenticate', request).then((res) => res.data)
   }
 
-  return { register, login }
+  const googleLogin = (authCode: String) => {
+    return axios.post<LoginResponse>('/auth/google', {authCode}).then((res) => res.data) 
+  }
+
+  return { register, login, googleLogin }
 }
 
 export default useAuthAPI
