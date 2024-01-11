@@ -56,7 +56,10 @@ const DashboardLayout: FC = () => {
       })
 
       stompClient.onConnect = () => {
+        console.log('connected');
+        
         stompClient.subscribe(`/user/${id}/queue/inboxmessages`, (data) => {
+      
           onMessageReceived(data)
         })
       }

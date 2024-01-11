@@ -31,6 +31,14 @@ const ServiceFilter: FC<ServiceFilterProps> = ({}) => {
       })
   }, [])
 
+  // useEffect(() => {
+  //   setData((prev) => {
+  //     const filteredServices = prev.services.filter(s => s.tags.some(tag => selectedCategories.includes(tag)));
+  //     return {filters: ProcessingInstructi}
+  //   })
+
+  // }, [selectedCategories])
+
   const onChange = () => {
 
     getServicesFilterCriteriaAndPage(

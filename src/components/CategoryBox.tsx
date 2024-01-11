@@ -1,10 +1,11 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { cn } from '../lib/utils'
 import { Category } from '../types/service/category'
+import { Tag } from '../types/service/service'
 
 interface CategoryBoxProps {
-  category: Category
-  setSelectedCategories: Dispatch<SetStateAction<Category[]>>
+  category: Tag
+  setSelectedCategories: Dispatch<SetStateAction<Tag[]>>
 }
 
 const CategoryBox: FC<CategoryBoxProps> = ({

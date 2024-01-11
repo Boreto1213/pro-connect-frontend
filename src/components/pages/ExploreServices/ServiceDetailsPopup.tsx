@@ -43,6 +43,13 @@ const ServiceDetailsPopup: FC<ServiceDetailsPopupProps> = ({}) => {
       `/dashboard/services?page=${currentPage}&popupOpen=false&seeReviews=false&selectedServiceId=`
     )
 
+  const onBuy = () => {
+    toast.success('Successful purchase. Check your direct messages')
+    navigate(
+      `/dashboard/services?page=${currentPage}&popupOpen=false&seeReviews=false&selectedServiceId=`
+    )
+  }
+
   return (
     <Dialog open={isOpen}>
       <DialogContent onClose={onClose}>
@@ -82,7 +89,7 @@ const ServiceDetailsPopup: FC<ServiceDetailsPopupProps> = ({}) => {
                 8.8 score
               </span>
             </div>
-            <Button>
+            <Button onClick={onBuy}>
               Buy for{' '}
               <span className='ml-1 text-lg font-semibold'>
                 {selectedService?.price}€

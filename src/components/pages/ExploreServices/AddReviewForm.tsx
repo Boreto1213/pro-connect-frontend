@@ -43,7 +43,7 @@ const AddReviewForm: FC<AddReviewFormProps> = ({ setReviews }) => {
   const {
     auth: { id },
   } = useAuth()
-  const { user } = useUserDetails()
+  const { auth } = useAuth()
   const getQueryParam = useGetQueryParam()
   const serviceId = getQueryParam('selectedServiceId')
 
@@ -58,12 +58,12 @@ const AddReviewForm: FC<AddReviewFormProps> = ({ setReviews }) => {
     }
     const optimisticReviewUpdate: Review = {
       id: 0,
-      createdBy: user!,
+      createdBy: {address: '', bio: '', city: '', dislikes: 0, likes: 0, email: '', firstName: auth.firstName, lastName: auth.lastName, profileImageUrl: auth.profileImageUrl, profession: '', id: 0, phone: '', yearsOfExperience: 0, password: ''},
       createdAt: new Date(),
       rating: rating,
       service: {
         description: '',
-        expert: user!,
+        expert: {address: '', bio: '', city: '', dislikes: 0, likes: 0, email: '', firstName: auth.firstName, lastName: auth.lastName, profileImageUrl: auth.profileImageUrl, profession: '', id: 0, phone: '', yearsOfExperience: 0, password: ''},
         price: 0,
         id: Number(serviceId),
         tags: [],
@@ -71,6 +71,8 @@ const AddReviewForm: FC<AddReviewFormProps> = ({ setReviews }) => {
       },
       text: data.review.trim(),
     }
+    console.log('new review: ', optimisticReviewUpdate);
+    
 
     setReviews((prev) => [optimisticReviewUpdate, ...prev])
 

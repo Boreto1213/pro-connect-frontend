@@ -18,8 +18,8 @@ import ExploreExperts from './components/pages/ExploreExperts/ExploreExperts'
 import Chats from './components/pages/Chats/Chats'
 
 enum Roles {
-  EXPERT = 'Expert',
-  CLIENT = 'Client',
+  EXPERT = 'ROLE_Expert',
+  CLIENT = 'ROLE_Client',
 }
 const router = createBrowserRouter([
   { path: '/', element: <Navigate to='/auth/login' /> },

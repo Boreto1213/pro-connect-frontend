@@ -13,6 +13,8 @@ const ReviewContainer: FC<ReviewContainerProps> = ({}) => {
   const getQueryParam = useGetQueryParam()
   const serviceId = getQueryParam('selectedServiceId')
   const [reviews, setReviews] = useState<Review[]>([])
+  console.log(reviews);
+  
   const reviewAPI = useReviewAPI()
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const ReviewContainer: FC<ReviewContainerProps> = ({}) => {
       <hr className='text-gray-200 w-full my-4' />
       <div className='flex flex-col gap-1 max-h-[302px] overflow-y-auto'>
         {reviews.length ? (
-          reviews.map((r) => <ReviewCard review={r} />)
+          reviews.map((r) => <ReviewCard key={r.id} review={r} />)
         ) : (
           <p className='text-lg text-gray-700 font-semibold w-full text-center'>
             No reviews yet. Be the first one. 🙂

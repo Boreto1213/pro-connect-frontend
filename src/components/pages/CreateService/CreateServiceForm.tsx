@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -10,42 +10,43 @@ import useAuth from '../../../hooks/useAuth'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
+import { Tag } from '../../../types/service/service'
 
-const categories = [
-  { id: 1, text: 'Gym' },
-  { id: 2, text: 'healthcare' },
-  { id: 3, text: 'yoga' },
-  { id: 4, text: 'sport' },
-  { id: 5, text: 'computer science' },
-  { id: 6, text: 'programming' },
-  { id: 7, text: 'IT' },
-  { id: 8, text: 'interior design' },
-  { id: 9, text: 'web design' },
-  { id: 10, text: 'design' },
-  { id: 11, text: 'international law' },
-  { id: 12, text: 'politics' },
-  { id: 13, text: 'travel' },
-  { id: 14, text: 'gardening' },
-  { id: 15, text: 'cyber security' },
-  { id: 16, text: 'plumbing' },
-  { id: 17, text: 'electrician' },
-  { id: 18, text: 'mentorship' },
-  { id: 19, text: 'skill enhancement' },
-  { id: 20, text: 'professional advice' },
-  { id: 21, text: 'marketing' },
-  { id: 22, text: 'education' },
-  { id: 23, text: 'real estate' },
-  { id: 24, text: 'remote' },
-  { id: 25, text: 'online' },
-  { id: 26, text: 'service' },
-  { id: 27, text: 'blockchain' },
-  { id: 28, text: 'AI' },
-  { id: 29, text: 'manufacturing' },
-  { id: 30, text: 'science' },
-  { id: 31, text: 'finances' },
-  { id: 32, text: 'entrepreneurship' },
-  { id: 33, text: 'business' },
-]
+// const categories = [
+//   { id: 1, text: 'Gym' },
+//   { id: 2, text: 'healthcare' },
+//   { id: 3, text: 'yoga' },
+//   { id: 4, text: 'sport' },
+//   { id: 5, text: 'computer science' },
+//   { id: 6, text: 'programming' },
+//   { id: 7, text: 'IT' },
+//   { id: 8, text: 'interior design' },
+//   { id: 9, text: 'web design' },
+//   { id: 10, text: 'design' },
+//   { id: 11, text: 'international law' },
+//   { id: 12, text: 'politics' },
+//   { id: 13, text: 'travel' },
+//   { id: 14, text: 'gardening' },
+//   { id: 15, text: 'cyber security' },
+//   { id: 16, text: 'plumbing' },
+//   { id: 17, text: 'electrician' },
+//   { id: 18, text: 'mentorship' },
+//   { id: 19, text: 'skill enhancement' },
+//   { id: 20, text: 'professional advice' },
+//   { id: 21, text: 'marketing' },
+//   { id: 22, text: 'education' },
+//   { id: 23, text: 'real estate' },
+//   { id: 24, text: 'remote' },
+//   { id: 25, text: 'online' },
+//   { id: 26, text: 'service' },
+//   { id: 27, text: 'blockchain' },
+//   { id: 28, text: 'AI' },
+//   { id: 29, text: 'manufacturing' },
+//   { id: 30, text: 'science' },
+//   { id: 31, text: 'finances' },
+//   { id: 32, text: 'entrepreneurship' },
+//   { id: 33, text: 'business' },
+// ]
 
 const schema = z.object({
   title: z
@@ -71,12 +72,26 @@ const CreateServiceForm: FC<CreateServiceFormProps> = ({}) => {
   } = useAuth()
   const serviceAPI = useServiceAPI()
   const navigate = useNavigate()
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
+  const [selectedCategories, setSelectedCategories] = useState<Tag[]>([])
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<FormData>({ resolver: zodResolver(schema) })
+  const [tags, setTags] = useState<Tag[]>([])
+
+
+  useEffect(() => {
+    serviceAPI.getAllTags()
+      .then((res) => {
+        console.log('res: ',res.data);
+        
+        setTags(res.data)
+      })
+      .catch((_) => {
+        toast.error('Something went wrong fetching tags.')
+      })
+  }, [])
 
   const onSubmit = (data: FormData) => {
     serviceAPI
@@ -161,8 +176,8 @@ const CreateServiceForm: FC<CreateServiceFormProps> = ({}) => {
         )}
       </div>
       <div className='flex flex-wrap gap-1 mb-6'>
-        {categories.length &&
-          categories.map((c, i) => (
+        {tags.length &&
+          tags.map((c, i) => (
             <CategoryBox
               key={i}
               category={c}
