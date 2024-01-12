@@ -12,6 +12,8 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken()
   const { auth } = useAuth()
+  console.log('Auth:', auth);
+  
   const navigate = useNavigate()
   const location = useLocation()
 

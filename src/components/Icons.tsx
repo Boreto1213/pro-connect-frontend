@@ -36,7 +36,7 @@ import {
   MoreHorizontal,
   SendHorizonal,
   MessageCircleIcon,
-  LogOut
+  LogOut,
 } from 'lucide-react'
 
 export const Icons = {
@@ -146,6 +146,26 @@ export const Icons = {
           d='M16 12V18C16.2652 18 16.5196 17.8946 16.7071 17.7071C16.8946 17.5196 17 17.2652 17 17V13C17 12.7348 16.8946 12.4804 16.7071 12.2929C16.5196 12.1054 16.2652 12 16 12Z'
           fill='#64748b'
         ></path>{' '}
+      </g>
+    </svg>
+  ),
+  Success: (props: LucideProps) => (
+    <svg
+      viewBox='0 0 1024 1024'
+      xmlns='http://www.w3.org/2000/svg'
+      fill='#000000'
+    >
+      <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
+      <g
+        id='SVGRepo_tracerCarrier'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      ></g>
+      <g id='SVGRepo_iconCarrier'>
+        <path
+          fill='#17d951'
+          d='M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z'
+        ></path>
       </g>
     </svg>
   ),
@@ -523,7 +543,7 @@ export const Icons = {
   MoreHorizontal,
   SendHorizonal,
   MessageCircleIcon,
-  LogOut
+  LogOut,
 }
 
 export type Icon = keyof typeof Icons

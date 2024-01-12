@@ -16,6 +16,9 @@ import ExploreServices from './components/pages/ExploreServices/ExploreServices'
 import CreateService from './components/pages/CreateService/CreateService'
 import ExploreExperts from './components/pages/ExploreExperts/ExploreExperts'
 import Chats from './components/pages/Chats/Chats'
+import Checkout from './components/pages/Checkout/Checkout'
+import CheckoutStatus from './components/pages/Checkout/CheckoutStatus'
+import PaymentLayout from './components/pages/Checkout/PaymentLayout'
 
 enum Roles {
   EXPERT = 'ROLE_Expert',
@@ -46,6 +49,7 @@ const router = createBrowserRouter([
       {
         element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
         children: [{ path: 'home', element: <Home /> }],
+        // children: [{ path: 'home', element: <Checkout /> }],
       },
       {
         element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
@@ -76,6 +80,18 @@ const router = createBrowserRouter([
         children: [{ path: 'chats', element: <Chats /> }],
       },
       { path: 'unauthorized', element: <Unauthorized /> },
+    ],
+  },
+  {
+    path: '/payment',
+    element: (
+      <Providers>
+        <PaymentLayout />
+      </Providers>
+    ),
+    children: [
+      { path: 'checkout', element: <Checkout /> },
+      { path: 'return', element: <CheckoutStatus /> },
     ],
   },
   { path: '*', element: <NotFound /> },

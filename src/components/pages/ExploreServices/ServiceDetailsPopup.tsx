@@ -44,9 +44,8 @@ const ServiceDetailsPopup: FC<ServiceDetailsPopupProps> = ({}) => {
     )
 
   const onBuy = () => {
-    toast.success('Successful purchase. Check your direct messages')
     navigate(
-      `/dashboard/services?page=${currentPage}&popupOpen=false&seeReviews=false&selectedServiceId=`
+      `/payment/checkout`
     )
   }
 
