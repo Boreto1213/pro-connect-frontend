@@ -12,22 +12,22 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken()
   const { auth } = useAuth()
-  console.log('Auth:', auth);
+  // console.log('Auth:', auth);
   
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
-    const requestInterceptor = axiosPrivate.interceptors.request.use(
-      (config) => {
-        if (!config.headers['Authorization']) {
-          config.headers['Authorization'] = `Bearer ${auth?.accessToken}`
-        }
+    // const requestInterceptor = axiosPrivate.interceptors.request.use(
+    //   (config) => {
+    //     if (!config.headers['Authorization']) {
+    //       config.headers['Authorization'] = `Bearer ${auth?.accessToken}`
+    //     }
 
-        return config
-      },
-      (error: AxiosError) => Promise.reject(error)
-    )
+    //     return config
+    //   },
+    //   (error: AxiosError) => Promise.reject(error)
+    // )
 
     const responseInterceptor = axiosPrivate.interceptors.response.use(
       (response) => response,
@@ -58,7 +58,7 @@ const useAxiosPrivate = () => {
     )
 
     return () => {
-      axiosPrivate.interceptors.request.eject(requestInterceptor)
+      // axiosPrivate.interceptors.request.eject(requestInterceptor)
       axiosPrivate.interceptors.response.eject(responseInterceptor)
     }
   }, [auth, refresh])

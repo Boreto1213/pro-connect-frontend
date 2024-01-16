@@ -42,7 +42,7 @@ const DashboardLayout: FC = () => {
       href: '/dashboard/services/create',
       icon: 'PackagePlus',
     },
-    { id: 6, name: 'Statistics', href: '/statistics', icon: 'BarChart4' },
+    { id: 6, name: 'Statistics', href: '/dashboard/statistics', icon: 'BarChart4' },
     { id: 7, name: 'About', href: '/about', icon: 'HelpCircle' },
   ]
 

@@ -9,8 +9,12 @@ interface RequireAuthProps {
 const RequireAuth: FC<RequireAuthProps> = ({ allowedRoles }) => {
   const { auth } = useAuth()
   const location = useLocation()
+  console.log('Auth role:', auth?.role)
+  console.log('Allowed roles:', allowedRoles);
+  
 
   return allowedRoles.includes(auth?.role) ? (
+    
     <Outlet />
   ) : auth?.id ? (
     <Navigate to='/dashboard/unauthorized' state={{from: location}} replace />

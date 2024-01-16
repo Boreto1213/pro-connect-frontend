@@ -154,6 +154,7 @@ export const Icons = {
       viewBox='0 0 1024 1024'
       xmlns='http://www.w3.org/2000/svg'
       fill='#000000'
+      {...props}
     >
       <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
       <g
