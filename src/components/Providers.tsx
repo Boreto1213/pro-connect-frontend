@@ -8,13 +8,15 @@ import UserDetailsProvider from '../context/UserDetailsProvider'
 import StompClientProvider from '../context/StompClientProvider'
 import MessagesProvider from '../context/MessagesProvider'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import ExpertFilterProvider from '../context/ExpertFilterProvider'
 
 interface ProvidersProps {
   children: ReactNode
 }
 
 const Providers: FC<ProvidersProps> = ({ children }) => {
-  const GOOGLE_CLIENT_ID = '581569922726-ahnbp29r6u40s5v2rtuid29g44dob83n.apps.googleusercontent.com'
+  const GOOGLE_CLIENT_ID =
+    '581569922726-ahnbp29r6u40s5v2rtuid29g44dob83n.apps.googleusercontent.com'
   return (
     <>
       <Toaster position='top-center' richColors />
@@ -23,9 +25,11 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
           <StompClientProvider>
             <MessagesProvider>
               <UserDetailsProvider>
-                <ServiceProvider>
-                  <NextUIProvider>{children}</NextUIProvider>
-                </ServiceProvider>
+                <ExpertFilterProvider>
+                  <ServiceProvider>
+                    <NextUIProvider>{children}</NextUIProvider>
+                  </ServiceProvider>
+                </ExpertFilterProvider>
               </UserDetailsProvider>
             </MessagesProvider>
           </StompClientProvider>
