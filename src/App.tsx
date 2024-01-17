@@ -20,6 +20,7 @@ import Checkout from './components/pages/Checkout/Checkout'
 import CheckoutStatus from './components/pages/Checkout/CheckoutStatus'
 import PaymentLayout from './components/pages/Checkout/PaymentLayout'
 import Statistics from './components/pages/Statistics/Statistics'
+import About from './components/pages/About/About'
 
 enum Roles {
   EXPERT = 'ROLE_Expert',
@@ -50,7 +51,6 @@ const router = createBrowserRouter([
       {
         element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
         children: [{ path: 'home', element: <Home /> }],
-        // children: [{ path: 'home', element: <Checkout /> }],
       },
       {
         element: <RequireAuth allowedRoles={[Roles.EXPERT, Roles.CLIENT]} />,
@@ -81,6 +81,7 @@ const router = createBrowserRouter([
         children: [{ path: 'chats', element: <Chats /> }],
       },
       {path: 'statistics', element: <Statistics />},
+      {path: 'about', element: <About />},
       { path: 'unauthorized', element: <Unauthorized /> },
     ],
   },

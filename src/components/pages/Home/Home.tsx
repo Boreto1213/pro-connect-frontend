@@ -9,10 +9,10 @@ interface HomeProps {}
 
 const Home: FC<HomeProps> = ({}) => {
   const bannerData: AppDataBanner[] = [
-    { word: 'members', number: '39k+', href: '/example', bgColor: 'teal' },
-    { word: 'experts', number: '5k+', href: '/example', bgColor: 'teal' },
-    { word: 'services', number: '10k+', href: '/example', bgColor: 'slate' },
-    { word: 'reviews', number: '200k', href: '/example', bgColor: 'gray' },
+    { word: 'members', number: '39k+', href: '/dashboard/experts', bgColor: 'teal' },
+    { word: 'experts', number: '5k+', href: '/dashboard/experts', bgColor: 'teal' },
+    { word: 'services', number: '10k+', href: '/dashboard/services', bgColor: 'slate' },
+    { word: 'reviews', number: '200k', href: '/dashboard/services', bgColor: 'gray' },
   ]
 
   const data = [

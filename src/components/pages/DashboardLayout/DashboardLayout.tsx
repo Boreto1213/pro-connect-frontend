@@ -43,7 +43,7 @@ const DashboardLayout: FC = () => {
       icon: 'PackagePlus',
     },
     { id: 6, name: 'Statistics', href: '/dashboard/statistics', icon: 'BarChart4' },
-    { id: 7, name: 'About', href: '/about', icon: 'HelpCircle' },
+    { id: 7, name: 'About', href: '/dashboard/about', icon: 'HelpCircle' },
   ]
 
   useEffect(() => {
