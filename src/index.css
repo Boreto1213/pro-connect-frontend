@@ -9,6 +9,9 @@ html {
 .height-screen-minus-180px {
   height: calc(100vh - 180px);
 }
+.min-height-screen-minus-180px {
+  min-height: calc(100vh - 180px);
+}
 
 .heading-stroke { 
   color: white;

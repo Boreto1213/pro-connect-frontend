@@ -21,6 +21,10 @@ export const useServiceAPI = () => {
     return axiosPrivate.get('/services/tags')
   }
 
+  const getServicesByExpertId = (expertId: number) => {
+    return axiosPrivate.get<Service[]>(`/services/expert/${expertId}`)
+  }
+
   const getServicesFilterCriteriaAndPage = (
     page: number,
     titleQuery: string,
@@ -32,5 +36,5 @@ export const useServiceAPI = () => {
     )
   }
 
-  return { createService, getServicesByPage, getServicesFilterCriteriaAndPage, getServiceById, getAllTags }
+  return { createService, getServicesByPage, getServicesFilterCriteriaAndPage, getServiceById, getAllTags, getServicesByExpertId }
 }

@@ -85,7 +85,7 @@ const Profile: FC<ProfileProps> = ({}) => {
   }, [updated])
 
   return (
-    <div className='w-full flex flex-col mt-10'>
+    <div className='w-full min-height-screen-minus-180px flex flex-col mt-10'>
       <div className='relative z-10 flex justify-between items-center gradient'>
         <div className='flex items-end gap-2'>
           <ProfileImage size='xxl' imageUrl={user?.profileImageUrl} />
@@ -112,7 +112,7 @@ const Profile: FC<ProfileProps> = ({}) => {
                   Edit profile
                 </Link>
                 <Link
-                  to='example'
+                  to=''
                   className='px-2 py-1.5 rounded-md hover:bg-gray-200 transition-colors'
                 >
                   Manage services
